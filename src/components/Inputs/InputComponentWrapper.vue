@@ -1,12 +1,11 @@
 
 <template>
   <div class="input-container">
-    <label class="input-label"> {{ label }}</label>
+    <label v-if="label" class="input-label"> {{ label }}</label>
 
     <div class="input-wrapper">
       <slot name="input"/>
-
-      <div class="validation-container error">
+      <div v-if="showValidation" class="validation-container error">
         <slot name="validation"/>
       </div>
     </div>
@@ -20,8 +19,9 @@
  */
 
 defineProps({
-  label: { type: String }
-})
+  label: { type: String },
+  showValidation: { type: Boolean, default: true }
+});
 
 </script>
 
@@ -64,6 +64,12 @@ input {
 
 input:focus {
   outline-style: solid;
+}
+
+input:disabled {
+  opacity: 0.6;
+  background-color: var(--bg-main-40);
+  cursor: not-allowed;
 }
 
 .validation-container {

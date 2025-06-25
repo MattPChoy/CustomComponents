@@ -1,15 +1,23 @@
 <template>
   <div class="documentation-item-container">
     <h2> {{ title }} </h2>
-    <slot name="usage"/>
-    <slot name="props"/>
+    <div> <slot name="usage"/> </div>
+
+    <b v-if="hasPropsSection">Props</b>
+    <div> <slot name="props"/> </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import {computed, useSlots} from "vue";
+
 defineProps({
-  title: { type: String, required: true }
+  title: {type: String, required: true}
 });
+
+const slots = useSlots();
+const hasPropsSection = computed(() => !!slots.props);
+
 </script>
 
 <style scoped>
@@ -18,6 +26,10 @@ defineProps({
   border-radius: 8px;
   padding: var(--space-2);
   min-width: 45%;
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
 }
 
 h2 {

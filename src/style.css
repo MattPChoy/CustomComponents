@@ -32,3 +32,11 @@ body {
 .pointer {
   cursor: pointer;
 }
+
+code {
+  background-color: var(--bg-main-20);
+  padding: var(--space-half);
+  border-radius: var(--space-half);
+  color: var(--font-primary-lighter);
+  margin: var(--space-half);
+}
