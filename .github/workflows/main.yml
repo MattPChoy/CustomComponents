@@ -28,4 +28,8 @@ jobs:
           git init
           git add -A
           git commit -m 'deploy'
-          git push -f https://MattPChoy:${{ secrets.GITHUB_TOKEN }}@github.com/MattPChoy/CustomComponents.git main:gh-pages
+      - name: Push Changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
