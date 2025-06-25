@@ -23,4 +23,4 @@ npm error 404 tarball, folder, http url, or git url.
 npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2025-06-25T11_05_21_814Z-debug-0.log
 ```
 
-To resolve this, prefix the package.json 'name' field with your Github name, e.g. `@mattpchoy/customcomponents`
+To resolve this, prefix the package.json 'name' field with your GitHub name, e.g. `@mattpchoy/customcomponents`
