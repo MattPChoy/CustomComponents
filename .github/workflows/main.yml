@@ -1,38 +1,40 @@
-name: Build Vue
-on: [ push ]
+name: Publish Pages
+
+on:
+  push:
+    branches: [main]
+
 jobs:
-  build_vue:
+  build:
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
     runs-on: ubuntu-latest
-    name: Build Vue
     steps:
-      - uses: actions/checkout@v4
-      - name: Setup Node
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup NodeJS
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-      - name: Install dependencies
-        run: npm ci
-      - name: Build
-        run: npm run build
-        env:
-          VITE_APP_KEY: ${{ secrets.VUE_APP_KEY }}
-          VITE_APP_URL: ${{ secrets.VUE_APP_URL }}
-          NODE_ENV: production
-      - name: Deploy
+          node-version: 20
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+        id: setup
+
+      - name: Build Pages
         run: |
-          cd dist
-          ln -s index.html 404.html
-          git config --global user.email "matthewpchoy@gmail.com"
-          git config --global user.name "Matt.Choy"
-          git config --global init.defaultBranch main
-          git init
-          git add -A
-          git commit -m 'deploy'
-      - name: Push Changes
-        uses: ad-m/github-push-action@master
+          npm clean-install
+          npm run build
+        env:
+          VITE_BASE_URL: "${{steps.setup.outputs.base_url}}"
+
+      - name: Upload Pages Artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          # Need to enable read and write permissions to get this step to work
-          # docs.github.com/actions/reference/authentication-in-a-workflow#modifying-the-permissions-for-the-github_token
-          # https://stackoverflow.com/questions/72851548/permission-denied-to-github-actionsbot
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.ref }}
+          path: dist
+
+      - name: Deploy Pages
+        uses: actions/deploy-pages@v4
