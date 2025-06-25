@@ -66,7 +66,7 @@ input:focus {
   outline-style: solid;
 }
 
-input:disabled {
+input:disabled, .input-disabled{
   opacity: 0.6;
   background-color: var(--bg-main-40);
   cursor: not-allowed;

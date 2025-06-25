@@ -31,3 +31,7 @@
     background-color: var(--bg-main);
     color: var(--font-primary);
 }
+
+.error {
+    color: var(--error-color);
+}

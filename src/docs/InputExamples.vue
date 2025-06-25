@@ -8,7 +8,7 @@
                       :required="textInputData.required" :disabled="textInputData.disabled"
                       :password="textInputData.password"
                       label="Text Here"/>
-        <div style="display: flex; flex-direction: row; gap: var(--space-8);">
+        <div class="toggle-bar">
           <c-toggle-input v-model="textInputData.required" label="Required"/>
           <c-toggle-input v-model="textInputData.multiline" label="Multi-line"/>
           <c-toggle-input v-model="textInputData.disabled" label="Disabled"/>
@@ -34,7 +34,7 @@
       <template #usage>
         <c-number-input v-model="numberInputModel" label="Numbers" :required="textInputData.required"
                         :disabled="numberInputData.disabled" :min="0" :max="10"/>
-        <div style="display: flex; flex-direction: row; gap: var(--space-8);">
+        <div class="toggle-bar">
           <c-toggle-input v-model="numberInputData.required" label="Required"/>
           <c-toggle-input v-model="numberInputData.disabled" label="Disabled"/>
         </div>
@@ -42,13 +42,32 @@
       <template #props>
         <ul>
           <input-prop-descriptions/>
-          <li><code>min</code>(Number | undefined): Minimum value of the input. If the value is less than this a
+          <li><code>min</code>(Number): Minimum value of the input. If the value is less than this a
             validation message will appear.
           </li>
-          <li><code>max</code>(Number | undefined): Maximum value of the input. If the value is greater than this a
+          <li><code>max</code>(Number): Maximum value of the input. If the value is greater than this a
             validation message will appear.
           </li>
-          <li><code>step</code>(Number | undefined): Discretization size for the input</li>
+          <li><code>step</code>(Number): Discretization size for the input</li>
+        </ul>
+      </template>
+    </DocWrapper>
+
+    <DocWrapper title="File Input">
+      <template #usage>
+        <CFileUpload :draggable="fileData.draggable" :disabled="fileData.disabled" :multiple="fileData.multiple"/>
+        <div class="toggle-bar">
+          <c-toggle-input v-model="fileData.draggable" label="Draggable"/>
+          <c-toggle-input v-model="fileData.disabled" label="Disabled"/>
+          <c-toggle-input v-model="fileData.multiple" label="Multiple"/>
+        </div>
+      </template>
+
+      <template #props>
+        <ul>
+          <li><code>required</code> (boolean): Whether the input is allowed to be non-empty.</li>
+          <li><code>disabled</code> (boolean): Whether the input is locked for input.</li>
+          <li><code>multiple</code> (boolean): Whether multiple files can be selected.</li>
         </ul>
       </template>
     </DocWrapper>
@@ -64,6 +83,7 @@ import {ref} from "vue";
 import CNumberInput from "../components/Inputs/CNumberInput.vue";
 import InputPropDescriptions from "./meta/InputPropDescriptions.vue";
 import CToggleInput from "../components/Inputs/CToggleInput.vue";
+import CFileUpload from "../components/Inputs/CFileUpload.vue";
 
 class InputData {
   public required: boolean = false;
@@ -76,12 +96,20 @@ class TextInputData extends InputData {
   public password: boolean = false;
 }
 
+class FileInputData {
+  public disabled: boolean = false;
+  public draggable: boolean = true;
+  public multiple: boolean = true;
+  public files: File[] = [];
+}
+
 const textInputData = ref(new TextInputData());
 const numberInputData = ref(new InputData());
 const firstTextInputValidation = (input: string) => input.length !== 0 ? undefined : "Required input";
 
-
 const numberInputModel = ref(0);
+
+const fileData = ref(new FileInputData());
 </script>
 
 
@@ -96,5 +124,11 @@ const numberInputModel = ref(0);
 
 ul {
   margin: 0;
+}
+
+.toggle-bar {
+  display: flex;
+  flex-direction: row;
+  gap: var(--space-8);
 }
 </style>
