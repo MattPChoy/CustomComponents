@@ -2,7 +2,7 @@
   <InputComponentWrapper :label="label">
     <template #input>
       <component :is="componentName"
-                 type="text"
+                 :type="componentType"
                  :value="inputValue"
                  @input="onInput"
                  class="input"
@@ -29,6 +29,7 @@ const props = defineProps({
   disabled: { type: Boolean, default: false },
   multiline: { type: Boolean, default: false },
   rows: { type: Number, default: 3 },
+  password: { type: Boolean, default: false },
 });
 
 const emit = defineEmits(['update:modelValue']);
@@ -54,12 +55,8 @@ const validationError = computed(() => {
   return false;
 });
 
-const componentName = computed(() => {
-  if (props.multiline) {
-    return "textarea";
-  }
-  return "input";
-})
+const componentName = computed(() => props.multiline ? "textarea" : "input");
+const componentType = computed(() => props.password ? "password" : "text");
 
 function onInput(event: Event) {
   hadInput.value = true;
