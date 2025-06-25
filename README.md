@@ -8,6 +8,13 @@ found in (Repository Settings > Code and Automation > Actions > General > Workfl
 
 ![img.png](./docs/workflowPermissions.png)
 
+# Github NPM package
+- To install these components as a NPM package, you can run `npm install @mattpchoy/customcomponents@0.0.0`
+  - However, you will need to generate a GitHub Personal Access Token (Classic) [instructions](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry) 
+  - After generating this token, run `npm login --registry https://npm.pkg.github.com` to authenticate yourself against the registry
+  - Then run the `npm install command`
+
+
 # GitHub Actions—Release Pipeline
 You may get a failure on the NPM publish step if you copy the pipeline YML file, something similar to:
 ```
