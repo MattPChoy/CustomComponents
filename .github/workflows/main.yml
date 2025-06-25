@@ -31,5 +31,8 @@ jobs:
       - name: Push Changes
         uses: ad-m/github-push-action@master
         with:
+          # Need to enable read and write permissions to get this step to work
+          # docs.github.com/actions/reference/authentication-in-a-workflow#modifying-the-permissions-for-the-github_token
+          # https://stackoverflow.com/questions/72851548/permission-denied-to-github-actionsbot
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ github.ref }}
