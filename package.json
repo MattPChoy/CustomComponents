@@ -1,5 +1,5 @@
 {
-  "name": "customcomponents",
+  "name": "@mattpchoy/customcomponents",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
@@ -20,5 +20,12 @@
     "typescript": "~5.8.3",
     "vite": "^7.0.0",
     "vue-tsc": "^2.2.10"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MattPChoy/CustomComponents.git"
   }
 }
