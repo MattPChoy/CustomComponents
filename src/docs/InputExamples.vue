@@ -129,6 +129,7 @@ ul {
 .toggle-bar {
   display: flex;
   flex-direction: row;
-  gap: var(--space-8);
+  column-gap: var(--space-8);
+  flex-wrap: wrap;
 }
 </style>
