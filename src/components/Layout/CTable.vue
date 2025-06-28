@@ -1,52 +1,58 @@
 <template>
   <div class="table-container">
     <div class="table-header-container">
-      <!-- Flexbox, column -->
       <div class="button-bar-container">
         <slot name="button-bar">
           <slot name="button-bar-left" class="button-bar-left">
-            <!-- Add in this here so that if button-bar-left slot is empty, button-bar-right is flexed to the right side-->
             <div></div>
           </slot>
-
-          <slot name="button-bar-right" class="button-bar-right">
-          </slot>
+          <slot name="button-bar-right" class="button-bar-right"></slot>
         </slot>
       </div>
 
-      <div class="search-container">
-        <div/>
+      <div class="search-container" v-if="options.useSearch">
+        <div />
         <div class="flex-row gap-x-1">
-          <font-awesome-icon icon="fas fa-search"></font-awesome-icon>
-          <c-text-input v-model="searchString" :show-validation="false" @update:modelValue="resetTableData"/>
+          <font-awesome-icon icon="fas fa-search" />
+          <c-text-input
+              v-model="searchString"
+              :show-validation="false"
+              @update:modelValue="resetTableData"
+          />
         </div>
       </div>
 
       <table class="table">
         <thead>
         <tr>
-          <th v-for="column in tableColumns" :key="column.key" @click="() => onColumnClicked(column.key)">
+          <th
+              v-for="column in tableColumns"
+              :key="column.key"
+              @click="() => onColumnClicked(column.key)"
+          >
             {{ column.displayName }}
-            <font-awesome-icon :icon="sortIcon" :class='{"hidden": sortColumn !== column.key}'/>
+            <font-awesome-icon
+                :icon="sortIcon"
+                :class="{ hidden: sortColumn !== column.key }"
+            />
           </th>
         </tr>
         </thead>
 
         <tbody>
-        <tr v-if="loading">
+        <tr v-if="loading && usePagination">
           <td :colspan="tableColumns.length">
-            <span> <font-awesome-icon icon="fas fa-spinner"/> </span>
+            <span><font-awesome-icon icon="fas fa-spinner" spin /></span>
           </td>
         </tr>
 
-        <tr v-for="row in rowsToDisplay">
-          <td v-for="col in tableColumns">
-            <slot :name="'col_'+col.key" :row="row">
+        <tr v-for="row in rowsToDisplay" :key="keySelector(row)">
+          <td v-for="col in tableColumns" :key="col.key">
+            <slot :name="'col_' + col.key" :row="row">
               {{ row[col.key] }}
             </slot>
           </td>
         </tr>
-
 
         <tr v-if="filteredRows.length === 0 && !loading">
           <td :colspan="tableColumns.length">
@@ -56,197 +62,203 @@
         </tbody>
       </table>
 
-      <div class="page-selector-container">
-        <div class="page-selector-item" v-for="i in Array.from(Array(numPages).keys())"
-             @click="() => setPage(i)" :class="{'current-page': i === currentPage}">
-          {{ i + 1 }}
+      <div class="page-selector-container" v-if="numPages >= 1">
+        <div
+            class="page-selector-item"
+            v-for="i in numPages"
+            :key="i"
+            @click="() => setPage(i - 1)"
+            :class="{ 'current-page': i - 1 === currentPage }"
+        >
+          {{ i }}
         </div>
 
-        <div v-if="usePagination && !loadedAllPaginatedEntries && numPages > 0" class="page-selector-item"
-             @click="onClickNext">Next
+        <div
+            v-if="usePagination && !loadedAllPaginatedEntries && numPages > 0"
+            class="page-selector-item"
+            @click="onClickNext"
+        >
+          Next
         </div>
       </div>
+
+      {{ filteredRows.length }}
     </div>
   </div>
 </template>
 
-<script setup lang="ts">
-import {computed, onMounted, type PropType, ref, watch} from "vue";
-import type {PaginationParams, TableOptions} from "./Table/TableOptions.ts";
+<script setup lang="ts" generic="T extends Record<string, any>">
+import {computed, onMounted, ref, watch, type Ref} from "vue";
+import type { PaginationParams, TableOptions } from "./Table/TableOptions.ts";
 import CTextInput from "../Inputs/CTextInput.vue";
-import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
-import {SortDirection} from "../../models/SortDirection.ts";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { SortDirection } from "../../models/SortDirection.ts";
 
-const props = defineProps({
-  rows: {
-    type: [Array, Function] as PropType<Array<object> | ((params: PaginationParams) => Promise<Array<object>>)>,
-    required: true
-  },
-  options: {type: Object as PropType<TableOptions>, required: true},
-});
+const props = defineProps<{
+  rows: T[] | ((params: PaginationParams) => Promise<T[]>);
+  options: TableOptions<T>;
+}>();
 
-onMounted(() => {
-  getNextPage();
-});
-
-// The rows retrieved via pagination
-const paginatedRows = ref([]);
-// Pagination position, effectively 'offset' in pagination terms.
+// @ts-ignore
+const paginatedRows:Ref<T[]> = ref<T[]>([]);
 const currentPage = ref(0);
 const searchString = ref("");
 const loading = ref(false);
-// Have we loaded all pagination entries?
 const loadedAllPaginatedEntries = ref(false);
 
-const sortColumn = ref(props.options?.defaultSortColumn ?? tableColumns.value[0]?.key ?? "");
-const sortDirection = ref(SortDirection.Ascending);
-const sortIcon = computed(() => sortDirection.value === SortDirection.Ascending ? 'fas fa-sort-up' : 'fas fa-sort-down')
+const usePagination = computed(() => typeof props.rows === "function");
+const options = props.options;
+const keySelector = options.keySelector;
 
-const pageSize = computed(() => props.options?.pageSize ?? 20);
-const numPages = computed(() => {
-  return Math.ceil(filteredRows.value.length / props.options?.pageSize);
+const tableColumns = computed(() => {
+  const sourceRows = usePagination.value ? paginatedRows.value : (props.rows as T[]);
+  if (sourceRows.length === 0) return [];
+  const keys = Object.keys(sourceRows[0]);
+
+  return keys
+      .sort((a, b) => {
+        const columnsKeys = Object.keys(options.columns || {});
+        const aInColumns = columnsKeys.includes(a);
+        const bInColumns = columnsKeys.includes(b);
+
+        if (aInColumns && !bInColumns) return -1;
+        if (!aInColumns && bInColumns) return 1;
+
+        const aIndex = columnsKeys.indexOf(a);
+        const bIndex = columnsKeys.indexOf(b);
+
+        if (aIndex !== -1 && bIndex !== -1) return aIndex - bIndex;
+        return a.localeCompare(b);
+      })
+      .map((key) => ({
+        key,
+        displayName: options.columns[key as keyof T]?.displayName || key,
+      }));
 });
+
+const sortColumn = ref(options.defaultSortColumn || tableColumns.value[0]?.key || "");
+const sortDirection = ref(SortDirection.Ascending);
+const sortIcon = computed(() =>
+    sortDirection.value === SortDirection.Ascending ? "fas fa-sort-up" : "fas fa-sort-down"
+);
+
+const pageSize = computed(() => options.pageSize);
+const numPages = computed(() => Math.ceil(filteredRows.value.length / pageSize.value));
 
 const paginationRequestTimer = ref<number>();
 
-const usePagination = computed(() => {
-  return typeof props.rows === 'function';
-});
-
-watch(() => props.options?.defaultSortColumn, (newValue: string) => {
-  sortColumn.value = newValue ?? tableColumns.value[0]?.key ?? "";
-}, {deep: true});
-
-const setPage = (page: number) => {
-  currentPage.value = page;
-
-  if (usePagination.value && page > currentPage.value) {
-    getNextPage();
-  }
-}
-
 async function getNextPage() {
+  if (!usePagination.value || loadedAllPaginatedEntries.value) return;
+  loading.value = true;
   clearTimeout(paginationRequestTimer.value);
-  paginationRequestTimer.value = setTimeout(async () => {
-    if (!usePagination.value) return;
-    loading.value = true;
 
+  paginationRequestTimer.value = window.setTimeout(async () => {
     try {
-      const rows = await props.rows({
+      const rows = await (props.rows as (params: PaginationParams) => Promise<T[]>)({
         limit: pageSize.value,
         offset: paginatedRows.value.length,
         searchString: searchString.value,
         sortByProperty: sortColumn.value,
-        sortDirection: sortDirection.value
-        // TODO: Sorting.
+        sortDirection: sortDirection.value,
       });
 
       paginatedRows.value.push(...rows);
-
-      if (rows.length !== pageSize.value) {
-        loadedAllPaginatedEntries.value = true;
-      }
-    } catch (e) {
-      console.error(e);
+      if (rows.length < pageSize.value) loadedAllPaginatedEntries.value = true;
+    } catch (error) {
+      console.error(error);
     } finally {
       loading.value = false;
     }
-  }, props.options?.paginationRetrievalDebounce ?? 200)
+  }, options.paginationRetrievalDebounce);
 }
 
-/**
- * Function to be called when searching or sorting; i.e. anything that effectively changes the order of data already
- * loaded. Resets the state of the component and re-fetches data from fresh.
- */
 function invalidatePaginationData() {
   paginatedRows.value = [];
   currentPage.value = 0;
   loadedAllPaginatedEntries.value = false;
-  loading.value = true;
 }
 
 function resetTableData() {
-  if (!usePagination) return;
+  if (!usePagination.value) return;
   invalidatePaginationData();
   getNextPage();
 }
 
 function onColumnClicked(key: string) {
   if (sortColumn.value === key) {
-    sortDirection.value = sortDirection.value === SortDirection.Ascending ? SortDirection.Descending : SortDirection.Ascending;
+    sortDirection.value =
+        sortDirection.value === SortDirection.Ascending
+            ? SortDirection.Descending
+            : SortDirection.Ascending;
+  } else {
+    sortDirection.value = SortDirection.Ascending;
   }
   sortColumn.value = key;
-
   invalidatePaginationData();
   getNextPage();
 }
 
 async function onClickNext() {
   await getNextPage();
-
   if (!loadedAllPaginatedEntries.value) currentPage.value += 1;
 }
 
-const rows = computed(() => {
-  if (usePagination.value) {
-    return paginatedRows.value;
+const filteredRows = computed<T[]>(() => {
+  if (usePagination.value) return paginatedRows.value;
+
+  const filtered = (props.rows as T[]).filter((row) =>
+      options.useSearch
+          ? Object.values(row).some((v) =>
+              v?.toString().toLowerCase().includes(searchString.value.toLowerCase())
+          )
+          : true
+  );
+
+  if (sortColumn.value) {
+    return filtered.slice().sort((a, b) => {
+      const aVal = a[sortColumn.value as keyof T];
+      const bVal = b[sortColumn.value as keyof T];
+      const direction = sortDirection.value === SortDirection.Ascending ? 1 : -1;
+
+      if (typeof aVal === "number" && typeof bVal === "number") return (aVal - bVal) * direction;
+      return aVal?.toString().localeCompare(bVal?.toString()) * direction;
+    });
   }
 
-  return props.rows as [];
-})
+  return filtered;
+});
 
-const tableColumns = computed(() =>
-    // Assume that the first object has the same keys 
-    Object.keys(rows.value[0] || {}).sort((a, b) => {
-      const aInColumns = a in (props.options?.columns || {});
-      const bInColumns = b in (props.options?.columns || {});
+const rowsToDisplay = computed(() => {
+  if (usePagination.value) {
+    return filteredRows.value.slice(currentPage.value * pageSize.value, (currentPage.value + 1) * pageSize.value);
+  }
+  return filteredRows.value.slice(
+      currentPage.value * pageSize.value,
+      (currentPage.value + 1) * pageSize.value
+  );
+});
 
-      if (aInColumns && !bInColumns) return -1;
-      if (!aInColumns && bInColumns) return 1;
+function setPage(page: number) {
+  currentPage.value = page;
+  if (usePagination.value && page > currentPage.value) {
+    getNextPage();
+  }
+}
 
-      const aIndex = Object.keys(props.options?.columns || {}).indexOf(a);
-      const bIndex = Object.keys(props.options?.columns || {}).indexOf(b);
+onMounted(() => {
+  if (usePagination.value) getNextPage();
+});
 
-      if (aIndex !== -1 && bIndex !== -1) return aIndex - bIndex;
-      return a.localeCompare(b);
-    }).map((key) => ({
-      key: key,
-      displayName: props.options?.columns[key]?.displayName || key,
-    }))
-);
-
-// Apply filtering and sorting, but not pagination yet
-const filteredRows = computed(() => {
-      if (usePagination.value) {
-        return paginatedRows.value
-      }
-
-      const rows = props.rows as [];
-
-      if (sortColumn.value !== "") {
-        rows.sort((first: object, second: object) => {
-
-          if (typeof first[sortColumn.value] === 'number' && typeof second[sortColumn.value] === 'number') {
-            return (first[sortColumn.value]! - second[sortColumn.value]!) * (sortDirection.value === SortDirection.Ascending ? 1 : -1);
-          }
-
-          return first[sortColumn.value]!.toString().localeCompare(second[sortColumn.value]!.toString()) *
-              (sortDirection.value === SortDirection.Ascending ? 1 : -1);
-        });
-      }
-
-      return (props.rows as [])
-          .filter((row) =>
-              Object.values(row).some((value) =>
-                  value!.toString().toLowerCase().includes(searchString.value.toLowerCase())
-              )
-          );
+watch(
+    () => options.defaultSortColumn,
+    (newVal) => {
+      sortColumn.value = newVal || tableColumns.value[0]?.key || "";
+      resetTableData();
     }
 );
 
-// The rows to show
-const rowsToDisplay = computed(() => {
-  return filteredRows.value.slice(currentPage.value * pageSize.value, (currentPage.value + 1) * pageSize.value)
+watch(searchString, () => {
+  resetTableData();
 });
 </script>
 
@@ -257,10 +269,11 @@ const rowsToDisplay = computed(() => {
   gap: var(--space-1);
 }
 
-.button-bar-container, .search-container {
+.button-bar-container,
+.search-container {
   display: flex;
   flex-direction: row;
-  justify-content: space-between; /* Push the elements to either side */
+  justify-content: space-between;
   width: 100%;
 }
 
@@ -269,6 +282,7 @@ const rowsToDisplay = computed(() => {
   flex-direction: row;
   justify-content: center;
   gap: var(--space-half);
+  margin-top: 8px;
 }
 
 .page-selector-item {
@@ -282,6 +296,7 @@ const rowsToDisplay = computed(() => {
   display: flex;
   justify-content: center;
   align-items: center;
+  user-select: none;
 }
 
 .page-selector-item:first-child {
@@ -301,14 +316,21 @@ const rowsToDisplay = computed(() => {
 
 table {
   width: 100%;
+  border-collapse: collapse;
 }
 
-td {
+td,
+th {
+  padding: 8px;
   text-align: center;
 }
 
 th {
-  /* Because sorting, set cursor pointer. */
   cursor: pointer;
+  user-select: none;
+}
+
+.hidden {
+  display: none;
 }
 </style>

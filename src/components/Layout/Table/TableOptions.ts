@@ -12,11 +12,11 @@ export class ColumnOptions {
     displayName!: string;
 }
 
-export interface TableOptions {
-    keySelector: (row: object) => string | number;
+export interface TableOptions<T> {
+    keySelector: (row: T) => string | number;
     pageSize: number;
     useSearch: boolean;
-    columns: Record<string, { displayName: string }>;
+    columns: Partial<Record<keyof T, { displayName: string }>>;
     paginationRetrievalDebounce: number;
     defaultSortColumn: string;
 }

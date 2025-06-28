@@ -42,10 +42,10 @@
       <template #usage>
         <c-table :options="tableOptions" :rows="tableRows">
           <template #col_role="{row}">
-              <font-awesome-icon v-if="row.role === 'admin'" icon="fas fa-lock"/>
-              <font-awesome-icon v-if="row.role === 'editor'" icon="fas fa-pencil"/>
-              <font-awesome-icon v-if="row.role === 'viewer'" icon="fas fa-eye"/>
-              {{ row.role }}
+            <font-awesome-icon v-if="(row as unknown as TableDataType).role === 'admin'" icon="fas fa-lock"/>
+            <font-awesome-icon v-if="(row as TableDataType).role === 'editor'" icon="fas fa-pencil"/>
+            <font-awesome-icon v-if="(row as TableDataType).role === 'viewer'" icon="fas fa-eye"/>
+            {{ (row as TableDataType).role }}
           </template>
         </c-table>
       </template>
@@ -77,10 +77,10 @@
       <template #usage>
         <c-table :options="tableOptions" :rows="getTableRowAsync">
           <template #col_role="{row}">
-            <font-awesome-icon v-if="row.role === 'admin'" icon="fas fa-lock"/>
-            <font-awesome-icon v-if="row.role === 'editor'" icon="fas fa-pencil"/>
-            <font-awesome-icon v-if="row.role === 'viewer'" icon="fas fa-eye"/>
-            {{ row.role }}
+            <font-awesome-icon v-if="(row as TableDataType).role === 'admin'" icon="fas fa-lock"/>
+            <font-awesome-icon v-if="(row as TableDataType).role === 'editor'" icon="fas fa-pencil"/>
+            <font-awesome-icon v-if="(row as TableDataType).role === 'viewer'" icon="fas fa-eye"/>
+            {{ (row as TableDataType).role }}
           </template>
         </c-table>
       </template>
@@ -101,30 +101,41 @@ import {SortDirection} from "../models/SortDirection.ts";
 interface TableDataType {
   name: string;
   id: number;
+  emailAddr: string;
+  role: string;
 }
 
 const tableRows = computed(() => mockTableData);
-function getTableRowAsync(retrievalOptions: PaginationParams) {
-  return new Promise<Array<object>>((resolve) => {
+
+const getTableRowAsync = (retrievalOptions: PaginationParams): Promise<TableDataType[]> => {
+  return new Promise((resolve) => {
     setTimeout(() => {
-      resolve(
-          mockTableData.filter((r) => {
-            if (!retrievalOptions.searchString || retrievalOptions.searchString!.length === 0) return true;
-            return r.name.toLowerCase().includes(retrievalOptions.searchString?.toLowerCase());
-          }).sort((first: object, second: object) => {
-            if (typeof first[retrievalOptions.sortByProperty] === 'number' && typeof second[retrievalOptions.sortByProperty] === 'number') {
-              return (first[retrievalOptions.sortByProperty]! - second[retrievalOptions.sortByProperty]!) * (retrievalOptions.sortDirection === SortDirection.Ascending ? 1 : -1);
+      const search = retrievalOptions.searchString?.toLowerCase();
+      const sortKey = retrievalOptions.sortByProperty as keyof TableDataType;
+
+      const result = mockTableData
+          .filter((row) => {
+            return !search || row.name.toLowerCase().includes(search);
+          })
+          .sort((a, b) => {
+            const aVal = a[sortKey];
+            const bVal = b[sortKey];
+            const direction = retrievalOptions.sortDirection === SortDirection.Ascending ? 1 : -1;
+
+            if (typeof aVal === 'number' && typeof bVal === 'number') {
+              return (aVal - bVal) * direction;
             }
 
-            return first[retrievalOptions.sortByProperty]!.toString().localeCompare(second[retrievalOptions.sortByProperty]!.toString()) *
-                (retrievalOptions.sortDirection === SortDirection.Ascending ? 1 : -1);
-          }).slice(retrievalOptions.offset, retrievalOptions.offset + retrievalOptions.limit)
-      );
+            return aVal.toString().localeCompare(bVal.toString()) * direction;
+          })
+          .slice(retrievalOptions.offset, retrievalOptions.offset + retrievalOptions.limit);
+
+      resolve(result);
     }, 800);
   });
-} 
+};
 
-const tableOptions = computed<TableOptions>(() => ({
+const tableOptions = computed<TableOptions<TableDataType>>(() => ({
   keySelector: (r: object) => (r as TableDataType).id,
   pageSize: 10,
   useSearch: true,
@@ -133,7 +144,8 @@ const tableOptions = computed<TableOptions>(() => ({
     name: {displayName: "Name"},
     role: { displayName: "User Role" },
   },
-  defaultSortColumn: "id"
+  defaultSortColumn: "id",
+  paginationRetrievalDebounce: 200
 }));
 </script>
 
