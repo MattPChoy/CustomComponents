@@ -60,6 +60,10 @@ h1 {
   margin: var(--space-4);
 }
 
+.hidden {
+  visibility: hidden;
+}
+
 .flex-row {
   display: flex;
   flex-direction: row;

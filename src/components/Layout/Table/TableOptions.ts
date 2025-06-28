@@ -1,9 +1,11 @@
+import {SortDirection} from "../../../models/SortDirection.ts";
+
 export interface PaginationParams {
     limit: number; // Page size
     offset: number; // Current index
     searchString?: string;
     sortByProperty: string;
-    sortDirection: "asc" | "desc";
+    sortDirection: SortDirection;
 }
 
 export class ColumnOptions {
@@ -16,4 +18,5 @@ export interface TableOptions {
     useSearch: boolean;
     columns: Record<string, { displayName: string }>;
     paginationRetrievalDebounce: number;
+    defaultSortColumn: string;
 }

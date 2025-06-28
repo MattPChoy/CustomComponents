@@ -49,13 +49,29 @@
           </template>
         </c-table>
       </template>
+
+      <template #props>
+        <ul>
+          <li><code>rows</code>(object[] | Function): The rows to display, or a function that retrieves the rows.
+            The getter function gets a <code>PaginationParams</code> type.</li>
+          <li><code>options</code>TableOptions: Options for configuration of the table.</li>
+        </ul>
+      </template>
+
+      <template #slots>
+        <ul>
+          <li><code>button-bar</code>A bar just above the table, allowing you to embed buttons.</li>
+          <li><code>button-bar-left</code>If not using button-bar, a container on the top-right of the table.</li>
+          <li><code>button-bar-right</code>If not using button-bar, a container on the top-right of the table.</li>
+          <li><code>col_{key}</code>A slot for overriding the rendering of a given row, where <code>key</code> is the </li>
+        </ul>
+      </template>
     </DocWrapper>
 
     <DocWrapper title="Table (With Pagination)">
       <template #description>
         <i>A highly configurable table component that supports both passing in a list of objects to display, but also
-          pagination via
-          infinite-scroll and manual page selection.</i>
+          pagination via infinite-scroll and manual page selection.</i>
       </template>
 
       <template #usage>
@@ -80,6 +96,7 @@ import {computed} from "vue";
 import type {PaginationParams, TableOptions} from "../components/Layout/Table/TableOptions.ts";
 import {mockTableData} from "./meta/TableData.ts";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
+import {SortDirection} from "../models/SortDirection.ts";
 
 interface TableDataType {
   name: string;
@@ -88,18 +105,20 @@ interface TableDataType {
 
 const tableRows = computed(() => mockTableData);
 function getTableRowAsync(retrievalOptions: PaginationParams) {
-  console.log("Loading..", retrievalOptions)
   return new Promise<Array<object>>((resolve) => {
     setTimeout(() => {
-      const r = mockTableData.filter((r) => {
-        if (!retrievalOptions.searchString || retrievalOptions.searchString!.length === 0) return true;
-        console.log(r.name, retrievalOptions.searchString, r.name.toLowerCase().includes(retrievalOptions.searchString?.toLowerCase()))
-        return r.name.toLowerCase().includes(retrievalOptions.searchString?.toLowerCase());
-      })
-          .slice(retrievalOptions.offset, retrievalOptions.offset + retrievalOptions.limit)
-      console.log(r)
       resolve(
-          r
+          mockTableData.filter((r) => {
+            if (!retrievalOptions.searchString || retrievalOptions.searchString!.length === 0) return true;
+            return r.name.toLowerCase().includes(retrievalOptions.searchString?.toLowerCase());
+          }).sort((first: object, second: object) => {
+            if (typeof first[retrievalOptions.sortByProperty] === 'number' && typeof second[retrievalOptions.sortByProperty] === 'number') {
+              return (first[retrievalOptions.sortByProperty]! - second[retrievalOptions.sortByProperty]!) * (retrievalOptions.sortDirection === SortDirection.Ascending ? 1 : -1);
+            }
+
+            return first[retrievalOptions.sortByProperty]!.toString().localeCompare(second[retrievalOptions.sortByProperty]!.toString()) *
+                (retrievalOptions.sortDirection === SortDirection.Ascending ? 1 : -1);
+          }).slice(retrievalOptions.offset, retrievalOptions.offset + retrievalOptions.limit)
       );
     }, 800);
   });
@@ -114,6 +133,7 @@ const tableOptions = computed<TableOptions>(() => ({
     name: {displayName: "Name"},
     role: { displayName: "User Role" },
   },
+  defaultSortColumn: "id"
 }));
 </script>
 

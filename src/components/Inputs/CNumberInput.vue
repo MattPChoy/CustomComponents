@@ -31,7 +31,6 @@ const props = defineProps({
 const validationError = ref("");
 
 function onChange() {
-  console.log(numberInput.value?.value, numberInput.value?.validity);
   if (numberInput.value?.validity.valueMissing) {
     validationError.value="Required value missing"
     return;

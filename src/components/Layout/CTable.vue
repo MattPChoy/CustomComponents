@@ -25,8 +25,9 @@
       <table class="table">
         <thead>
         <tr>
-          <th v-for="column in tableColumns" :key="column.key">
+          <th v-for="column in tableColumns" :key="column.key" @click="() => onColumnClicked(column.key)">
             {{ column.displayName }}
+            <font-awesome-icon :icon="sortIcon" :class='{"hidden": sortColumn !== column.key}'/>
           </th>
         </tr>
         </thead>
@@ -61,17 +62,20 @@
           {{ i + 1 }}
         </div>
 
-        <div v-if="usePagination && !loadedAllPaginatedEntries && numPages > 0" class="page-selector-item" @click="onClickNext">Next</div>
+        <div v-if="usePagination && !loadedAllPaginatedEntries && numPages > 0" class="page-selector-item"
+             @click="onClickNext">Next
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import {computed, onMounted, type PropType, ref} from "vue";
+import {computed, onMounted, type PropType, ref, watch} from "vue";
 import type {PaginationParams, TableOptions} from "./Table/TableOptions.ts";
 import CTextInput from "../Inputs/CTextInput.vue";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
+import {SortDirection} from "../../models/SortDirection.ts";
 
 const props = defineProps({
   rows: {
@@ -93,6 +97,11 @@ const searchString = ref("");
 const loading = ref(false);
 // Have we loaded all pagination entries?
 const loadedAllPaginatedEntries = ref(false);
+
+const sortColumn = ref(props.options?.defaultSortColumn ?? tableColumns.value[0]?.key ?? "");
+const sortDirection = ref(SortDirection.Ascending);
+const sortIcon = computed(() => sortDirection.value === SortDirection.Ascending ? 'fas fa-sort-up' : 'fas fa-sort-down')
+
 const pageSize = computed(() => props.options?.pageSize ?? 20);
 const numPages = computed(() => {
   return Math.ceil(filteredRows.value.length / props.options?.pageSize);
@@ -103,6 +112,10 @@ const paginationRequestTimer = ref<number>();
 const usePagination = computed(() => {
   return typeof props.rows === 'function';
 });
+
+watch(() => props.options?.defaultSortColumn, (newValue: string) => {
+  sortColumn.value = newValue ?? tableColumns.value[0]?.key ?? "";
+}, {deep: true});
 
 const setPage = (page: number) => {
   currentPage.value = page;
@@ -117,13 +130,14 @@ async function getNextPage() {
   paginationRequestTimer.value = setTimeout(async () => {
     if (!usePagination.value) return;
     loading.value = true;
-    console.log("Current page is", currentPage.value)
 
     try {
       const rows = await props.rows({
         limit: pageSize.value,
         offset: paginatedRows.value.length,
         searchString: searchString.value,
+        sortByProperty: sortColumn.value,
+        sortDirection: sortDirection.value
         // TODO: Sorting.
       });
 
@@ -148,11 +162,21 @@ function invalidatePaginationData() {
   paginatedRows.value = [];
   currentPage.value = 0;
   loadedAllPaginatedEntries.value = false;
-  loading.value = false;
+  loading.value = true;
 }
 
 function resetTableData() {
   if (!usePagination) return;
+  invalidatePaginationData();
+  getNextPage();
+}
+
+function onColumnClicked(key: string) {
+  if (sortColumn.value === key) {
+    sortDirection.value = sortDirection.value === SortDirection.Ascending ? SortDirection.Descending : SortDirection.Ascending;
+  }
+  sortColumn.value = key;
+
   invalidatePaginationData();
   getNextPage();
 }
@@ -195,6 +219,20 @@ const tableColumns = computed(() =>
 const filteredRows = computed(() => {
       if (usePagination.value) {
         return paginatedRows.value
+      }
+
+      const rows = props.rows as [];
+
+      if (sortColumn.value !== "") {
+        rows.sort((first: object, second: object) => {
+
+          if (typeof first[sortColumn.value] === 'number' && typeof second[sortColumn.value] === 'number') {
+            return (first[sortColumn.value]! - second[sortColumn.value]!) * (sortDirection.value === SortDirection.Ascending ? 1 : -1);
+          }
+
+          return first[sortColumn.value]!.toString().localeCompare(second[sortColumn.value]!.toString()) *
+              (sortDirection.value === SortDirection.Ascending ? 1 : -1);
+        });
       }
 
       return (props.rows as [])
@@ -267,5 +305,10 @@ table {
 
 td {
   text-align: center;
+}
+
+th {
+  /* Because sorting, set cursor pointer. */
+  cursor: pointer;
 }
 </style>
