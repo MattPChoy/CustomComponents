@@ -15,4 +15,5 @@ export interface TableOptions {
     pageSize: number;
     useSearch: boolean;
     columns: Record<string, { displayName: string }>;
+    paginationRetrievalDebounce: number;
 }

@@ -18,7 +18,7 @@
         <div/>
         <div class="flex-row gap-x-1">
           <font-awesome-icon icon="fas fa-search"></font-awesome-icon>
-          <c-text-input v-model="searchString" :show-validation="false"/>
+          <c-text-input v-model="searchString" :show-validation="false" @update:modelValue="resetTableData"/>
         </div>
       </div>
 
@@ -32,6 +32,12 @@
         </thead>
 
         <tbody>
+        <tr v-if="loading">
+          <td :colspan="tableColumns.length">
+            <span> <font-awesome-icon icon="fas fa-spinner"/> </span>
+          </td>
+        </tr>
+
         <tr v-for="row in rowsToDisplay">
           <td v-for="col in tableColumns">
             <slot :name="'col_'+col.key" :row="row">
@@ -40,8 +46,11 @@
           </td>
         </tr>
 
-        <tr v-if="filteredRows.length === 0">
-          <td :colspan="tableColumns.length" style="width: 100%;">No records found</td>
+
+        <tr v-if="filteredRows.length === 0 && !loading">
+          <td :colspan="tableColumns.length">
+            <span>No records found</span>
+          </td>
         </tr>
         </tbody>
       </table>
@@ -51,13 +60,15 @@
              @click="() => setPage(i)" :class="{'current-page': i === currentPage}">
           {{ i + 1 }}
         </div>
+
+        <div v-if="usePagination && !loadedAllPaginatedEntries && numPages > 0" class="page-selector-item" @click="onClickNext">Next</div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import {computed, type PropType, ref} from "vue";
+import {computed, onMounted, type PropType, ref} from "vue";
 import type {PaginationParams, TableOptions} from "./Table/TableOptions.ts";
 import CTextInput from "../Inputs/CTextInput.vue";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
@@ -70,26 +81,86 @@ const props = defineProps({
   options: {type: Object as PropType<TableOptions>, required: true},
 });
 
+onMounted(() => {
+  getNextPage();
+});
+
 // The rows retrieved via pagination
 const paginatedRows = ref([]);
 // Pagination position, effectively 'offset' in pagination terms.
-const currentIndex = ref(0);
+const currentPage = ref(0);
 const searchString = ref("");
-
+const loading = ref(false);
+// Have we loaded all pagination entries?
+const loadedAllPaginatedEntries = ref(false);
+const pageSize = computed(() => props.options?.pageSize ?? 20);
 const numPages = computed(() => {
-  if (!usePagination.value) return Math.ceil(filteredRows.value.length / props.options?.pageSize);
+  return Math.ceil(filteredRows.value.length / props.options?.pageSize);
 });
 
-const currentPage = computed(() => {
-  return Math.floor(currentIndex.value / props.options?.pageSize);
-})
+const paginationRequestTimer = ref<number>();
 
 const usePagination = computed(() => {
   return typeof props.rows === 'function';
 });
 
 const setPage = (page: number) => {
-  currentIndex.value = page * props.options?.pageSize;
+  currentPage.value = page;
+
+  if (usePagination.value && page > currentPage.value) {
+    getNextPage();
+  }
+}
+
+async function getNextPage() {
+  clearTimeout(paginationRequestTimer.value);
+  paginationRequestTimer.value = setTimeout(async () => {
+    if (!usePagination.value) return;
+    loading.value = true;
+    console.log("Current page is", currentPage.value)
+
+    try {
+      const rows = await props.rows({
+        limit: pageSize.value,
+        offset: paginatedRows.value.length,
+        searchString: searchString.value,
+        // TODO: Sorting.
+      });
+
+      paginatedRows.value.push(...rows);
+
+      if (rows.length !== pageSize.value) {
+        loadedAllPaginatedEntries.value = true;
+      }
+    } catch (e) {
+      console.error(e);
+    } finally {
+      loading.value = false;
+    }
+  }, props.options?.paginationRetrievalDebounce ?? 200)
+}
+
+/**
+ * Function to be called when searching or sorting; i.e. anything that effectively changes the order of data already
+ * loaded. Resets the state of the component and re-fetches data from fresh.
+ */
+function invalidatePaginationData() {
+  paginatedRows.value = [];
+  currentPage.value = 0;
+  loadedAllPaginatedEntries.value = false;
+  loading.value = false;
+}
+
+function resetTableData() {
+  if (!usePagination) return;
+  invalidatePaginationData();
+  getNextPage();
+}
+
+async function onClickNext() {
+  await getNextPage();
+
+  if (!loadedAllPaginatedEntries.value) currentPage.value += 1;
 }
 
 const rows = computed(() => {
@@ -122,9 +193,11 @@ const tableColumns = computed(() =>
 
 // Apply filtering and sorting, but not pagination yet
 const filteredRows = computed(() => {
-      const rows = (usePagination.value ? paginatedRows.value : props.rows) as [];
-      console.log(searchString.value)
-      return rows
+      if (usePagination.value) {
+        return paginatedRows.value
+      }
+
+      return (props.rows as [])
           .filter((row) =>
               Object.values(row).some((value) =>
                   value!.toString().toLowerCase().includes(searchString.value.toLowerCase())
@@ -134,8 +207,9 @@ const filteredRows = computed(() => {
 );
 
 // The rows to show
-const rowsToDisplay = computed(() =>
-    filteredRows.value.slice(currentIndex.value, currentIndex.value + props.options?.pageSize));
+const rowsToDisplay = computed(() => {
+  return filteredRows.value.slice(currentPage.value * pageSize.value, (currentPage.value + 1) * pageSize.value)
+});
 </script>
 
 <style scoped>
@@ -160,8 +234,9 @@ const rowsToDisplay = computed(() =>
 }
 
 .page-selector-item {
-  width: var(--space-3);
+  min-width: var(--space-1);
   height: var(--space-3);
+  padding: 0 8px;
   line-height: var(--space-3);
   border: 1px solid var(--font-primary);
   cursor: pointer;

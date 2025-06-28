@@ -50,6 +50,25 @@
         </c-table>
       </template>
     </DocWrapper>
+
+    <DocWrapper title="Table (With Pagination)">
+      <template #description>
+        <i>A highly configurable table component that supports both passing in a list of objects to display, but also
+          pagination via
+          infinite-scroll and manual page selection.</i>
+      </template>
+
+      <template #usage>
+        <c-table :options="tableOptions" :rows="getTableRowAsync">
+          <template #col_role="{row}">
+            <font-awesome-icon v-if="row.role === 'admin'" icon="fas fa-lock"/>
+            <font-awesome-icon v-if="row.role === 'editor'" icon="fas fa-pencil"/>
+            <font-awesome-icon v-if="row.role === 'viewer'" icon="fas fa-eye"/>
+            {{ row.role }}
+          </template>
+        </c-table>
+      </template>
+    </DocWrapper>
   </div>
 </template>
 
@@ -58,7 +77,7 @@ import DocWrapper from "./meta/DocWrapper.vue";
 import NavBar from "../components/Layout/NavBar.vue";
 import CTable from "../components/Layout/CTable.vue";
 import {computed} from "vue";
-import type {TableOptions} from "../components/Layout/Table/TableOptions.ts";
+import type {PaginationParams, TableOptions} from "../components/Layout/Table/TableOptions.ts";
 import {mockTableData} from "./meta/TableData.ts";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 
@@ -68,6 +87,23 @@ interface TableDataType {
 }
 
 const tableRows = computed(() => mockTableData);
+function getTableRowAsync(retrievalOptions: PaginationParams) {
+  console.log("Loading..", retrievalOptions)
+  return new Promise<Array<object>>((resolve) => {
+    setTimeout(() => {
+      const r = mockTableData.filter((r) => {
+        if (!retrievalOptions.searchString || retrievalOptions.searchString!.length === 0) return true;
+        console.log(r.name, retrievalOptions.searchString, r.name.toLowerCase().includes(retrievalOptions.searchString?.toLowerCase()))
+        return r.name.toLowerCase().includes(retrievalOptions.searchString?.toLowerCase());
+      })
+          .slice(retrievalOptions.offset, retrievalOptions.offset + retrievalOptions.limit)
+      console.log(r)
+      resolve(
+          r
+      );
+    }, 800);
+  });
+} 
 
 const tableOptions = computed<TableOptions>(() => ({
   keySelector: (r: object) => (r as TableDataType).id,
