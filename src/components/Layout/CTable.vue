@@ -81,8 +81,6 @@
           Next
         </div>
       </div>
-
-      {{ filteredRows.length }}
     </div>
   </div>
 </template>
