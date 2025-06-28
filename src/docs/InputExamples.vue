@@ -1,6 +1,5 @@
 <template>
-  <div class="documentation-container">
-
+  <div class="content-container">
     <DocWrapper title="Text Input">
       <template #usage>
         <c-text-input v-model="textInputData.value"
@@ -114,18 +113,6 @@ const fileData = ref(new FileInputData());
 
 
 <style scoped>
-.documentation-container {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-1);
-
-  margin: var(--space-4);
-}
-
-ul {
-  margin: 0;
-}
-
 .toggle-bar {
   display: flex;
   flex-direction: row;

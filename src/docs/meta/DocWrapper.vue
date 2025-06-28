@@ -1,10 +1,14 @@
 <template>
   <div class="documentation-item-container">
     <h2> {{ title }} </h2>
+    <slot name="description"/>
     <div> <slot name="usage"/> </div>
 
     <b v-if="hasPropsSection">Props</b>
     <div> <slot name="props"/> </div>
+
+    <b v-if="hasSlotsSection">Slots</b>
+    <div> <slot name="slots"/> </div>
   </div>
 </template>
 
@@ -17,6 +21,7 @@ defineProps({
 
 const slots = useSlots();
 const hasPropsSection = computed(() => !!slots.props);
+const hasSlotsSection = computed(() => !!slots.slots);
 
 </script>
 

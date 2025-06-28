@@ -14,3 +14,7 @@
     --space-1-5: 12px;
     --space-2-5: calc(var(--space-1) * 2.5);
 }
+
+.gap-x-1 {
+    column-gap: var(--space-1);
+}

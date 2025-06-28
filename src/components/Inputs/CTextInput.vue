@@ -1,5 +1,5 @@
 <template>
-  <InputComponentWrapper :label="label">
+  <InputComponentWrapper :label="label" :show-validation="showValidation">
     <template #input>
       <component :is="componentName"
                  :type="componentType"
@@ -30,6 +30,7 @@ const props = defineProps({
   multiline: { type: Boolean, default: false },
   rows: { type: Number, default: 3 },
   password: { type: Boolean, default: false },
+  showValidation: { type: Boolean, default: true }
 });
 
 const emit = defineEmits(['update:modelValue']);

@@ -1,5 +1,5 @@
 <template>
-  <InputComponentWrapper :label="label">
+  <InputComponentWrapper :label="label" :show-validation="showValidation">
     <template #input>
       <input type="number" class="input" v-model="model" @input="onChange" ref="numberInput"
              :disabled="disabled" :required="required" :min="min" :max="max" :step="step"/>
@@ -22,6 +22,7 @@ const props = defineProps({
   label: {type: String},
   required: {type: Boolean, default: false},
   disabled: {type: Boolean, default: false},
+  showValidation: { type: Boolean, default: true},
   min: {type: Number},
   max: {type: Number},
   step: {type: Number},
