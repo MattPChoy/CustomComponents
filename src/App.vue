@@ -20,7 +20,7 @@
 
     <span>
       <font-awesome-icon icon="fab fa-github"/>
-      <a class="github-link" href="http://github.com/MattPChoy/CustomCompoments">Custom Components</a>
+      <a class="github-link" href="https://github.com/MattPChoy/CustomCompoments">Custom Components</a>
     </span>
   </div>
 </template>

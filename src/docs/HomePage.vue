@@ -14,7 +14,7 @@
           <a href="/CustomComponents/Inputs"> Inputs </a>: Text input, file upload components with validation, etc.
         </li>
         <li>
-          <a href="/CustomComponents/Layout"> Layout </a>: NavBar, tables etc.
+          <a href="/CustomComponents/Layouts"> Layout </a>: NavBar, tables etc.
         </li>
       </ul>
     </div>
