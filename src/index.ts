@@ -12,4 +12,4 @@ export {
 
     CTable, NavBar,
 };
-export type { PaginationParams, TableOptions,ColumnOptions};
+export type { PaginationParams, TableOptions, ColumnOptions};

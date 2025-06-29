@@ -1,4 +1,4 @@
-import {SortDirection} from "../../../models/SortDirection.ts";
+import {SortDirection} from "../../../models/SortDirection";
 
 export interface PaginationParams {
     limit: number; // Page size

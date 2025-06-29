@@ -1,10 +1,18 @@
 {
-  "files": [],
   "references": [
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }
   ],
+  "compilerOptions": {
+    "noEmit": false,
+    "outDir": "dist",
+    "rootDir": "src",
+    "declaration": true,
+    // Generate .js files too which contain the functionality
+    "emitDeclarationOnly": false,
+    "lib": ["esnext", "dom"]
+  },
   // Exclude these files from the bundle.
-  "exclude": ["src/App.vue", "src/main.ts"],
-  "include": ["lib/**/*.ts", "lib/**/*.d.ts", "lib/**/*.tsx", "lib/**/*.vue"],
+  "exclude": ["src/App.vue", "src/main.ts", "vite.config.ts", "vite.config.*.ts"],
+  "include": ["src"],
 }

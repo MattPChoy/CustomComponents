@@ -12,7 +12,7 @@ export default defineConfig({
   build:{
     lib: {
       // The file that is loaded when someone imports the plugin into the app
-      entry: resolve(__dirname, "src/lib.ts"),
+      entry: resolve(__dirname, "src/index.ts"),
       name: "MattCustomComponents",
       fileName: "matt-custom-components"
     },

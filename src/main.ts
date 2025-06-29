@@ -7,7 +7,7 @@ import {library} from "@fortawesome/fontawesome-svg-core";
 import {fas} from "@fortawesome/free-solid-svg-icons";
 import {faR} from "@fortawesome/free-solid-svg-icons/faR";
 import {fab} from "@fortawesome/free-brands-svg-icons";
-import {router} from "./router.ts";
+import {router} from "./router";
 
 setupFontAwesome();
 

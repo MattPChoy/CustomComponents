@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "lib": ["ES2023", "dom"],
+    "outDir": "dist",
+    "rootDir": "src",
+    "declaration": true,
+    "emitDeclarationOnly": false,
+    "noEmit": false,
+    "composite": true
+  },
+  "include": ["src"],
+  "exclude": ["vite.config.ts", "vite.config.*.ts", "src/App.vue", "src/main.ts"]
+}

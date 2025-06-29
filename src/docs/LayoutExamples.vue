@@ -93,10 +93,10 @@ import DocWrapper from "./meta/DocWrapper.vue";
 import NavBar from "../components/Layout/NavBar.vue";
 import CTable from "../components/Layout/CTable.vue";
 import {computed} from "vue";
-import type {PaginationParams, TableOptions} from "../components/Layout/Table/TableOptions.ts";
-import {mockTableData} from "./meta/TableData.ts";
+import type {PaginationParams, TableOptions} from "../components/Layout/Table/TableOptions";
+import {mockTableData} from "./meta/TableData";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
-import {SortDirection} from "../models/SortDirection.ts";
+import {SortDirection} from "../models/SortDirection";
 
 interface TableDataType {
   name: string;

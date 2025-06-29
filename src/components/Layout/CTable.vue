@@ -87,10 +87,10 @@
 
 <script setup lang="ts" generic="T extends Record<string, any>">
 import {computed, onMounted, ref, watch, type Ref} from "vue";
-import type { PaginationParams, TableOptions } from "./Table/TableOptions.ts";
+import type { PaginationParams, TableOptions } from "./Table/TableOptions";
 import CTextInput from "../Inputs/CTextInput.vue";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { SortDirection } from "../../models/SortDirection.ts";
+import { SortDirection } from "../../models/SortDirection";
 
 const props = defineProps<{
   rows: T[] | ((params: PaginationParams) => Promise<T[]>);

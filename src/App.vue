@@ -27,7 +27,7 @@
 
 <script setup lang="ts">
 import NavBar from "./components/Layout/NavBar.vue";
-import {isDark, toggleTheme} from "./styles/theming.ts";
+import {isDark, toggleTheme} from "./styles/theming";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 
 function onThemeNameClicked() {

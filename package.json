@@ -5,10 +5,11 @@
   "files": ["dist"],
   "main": "./dist/matt-custom-components.umd.cjs",
   "module": "./dist/matt-custom-components.js",
-  "types": "./dist/matt-custom-components.d.ts",
+  "types": "./dist/main.d.ts",
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc -b && vite build",
+    "build:types": "vue-tsc -b tsconfig.build.json",
+    "build": "npm run build:types && vite build",
     "preview": "vite preview"
   },
   "exports": {
