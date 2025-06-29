@@ -1,11 +1,24 @@
 {
   "name": "@mattpchoy/customcomponents",
-  "version": "0.1",
+  "version": "0.0.9",
   "type": "module",
+  "files": ["dist"],
+  "main": "./dist/matt-custom-components.umd.cjs",
+  "module": "./dist/matt-custom-components.js",
+  "types": "./dist/matt-custom-components.d.ts",
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc -b && vite build",
     "preview": "vite preview"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/matt-custom-components.js",
+      "require": "./dist/matt-custom-components.umd.cjs"
+    },
+    "./style.css": "./dist/style.css",
+    "./theme.css": "./dist/theme.css",
+    "./spacing.css": "./dist/spacing.css"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free-brands": "^5.0.13",
@@ -13,6 +26,7 @@
     "@fortawesome/free-brands-svg-icons": "^6.7.2",
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
     "@fortawesome/vue-fontawesome": "^3.0.8",
+    "@types/node": "^24.0.7",
     "@vue/language-server": "^2.2.10",
     "@vueuse/core": "^13.4.0",
     "vue": "^3.5.17",
