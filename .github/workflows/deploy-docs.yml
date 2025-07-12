@@ -27,7 +27,7 @@ jobs:
       - name: Build Pages
         run: |
           npm clean-install
-          npm run build
+          npm run build:docs
         env:
           VITE_BASE_URL: "${{steps.setup.outputs.base_url}}"
 
