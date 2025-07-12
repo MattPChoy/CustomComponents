@@ -1,14 +1,13 @@
 <template>
+
   <nav>
-    <div class="nav-left nav-item-container">
-      <slot name="nav-left"></slot>
-    </div>
 
-    <div class="nav-right nav-item-container">
-      <slot name="nav-right"></slot>
+    <div class="nav-left nav-item-container"> <slot name="nav-left"></slot> </div>
 
-    </div>
+    <div class="nav-right nav-item-container"> <slot name="nav-right"></slot> </div>
+
   </nav>
+
 </template>
 
 <style scoped>

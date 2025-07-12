@@ -1,28 +1,29 @@
 <template>
+
   <div class="documentation-item-container">
+
     <h2> {{ title }} </h2>
-    <slot name="description"/>
-    <div> <slot name="usage"/> </div>
+     <slot name="description" />
+    <div> <slot name="usage" /> </div>
+     <b v-if="hasPropsSection">Props</b>
+    <div> <slot name="props" /> </div>
+     <b v-if="hasSlotsSection">Slots</b>
+    <div> <slot name="slots" /> </div>
 
-    <b v-if="hasPropsSection">Props</b>
-    <div> <slot name="props"/> </div>
-
-    <b v-if="hasSlotsSection">Slots</b>
-    <div> <slot name="slots"/> </div>
   </div>
+
 </template>
 
 <script setup lang="ts">
-import {computed, useSlots} from "vue";
+import { computed, useSlots } from 'vue'
 
 defineProps({
-  title: {type: String, required: true}
-});
+  title: { type: String, required: true },
+})
 
-const slots = useSlots();
-const hasPropsSection = computed(() => !!slots.props);
-const hasSlotsSection = computed(() => !!slots.slots);
-
+const slots = useSlots()
+const hasPropsSection = computed(() => !!slots.props)
+const hasSlotsSection = computed(() => !!slots.slots)
 </script>
 
 <style scoped>

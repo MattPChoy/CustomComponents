@@ -1,37 +1,37 @@
 <template>
-  <NavBar>
-    <template #nav-left>
-      <a href="/CustomComponents/" class="app-logo">MattPChoy</a>
-    </template>
-
-    <template #nav-right>
-      <a href="/CustomComponents/inputs">Inputs</a>
-      <a href="/CustomComponents/layouts">Layout</a>
+   <NavBar
+    > <template #nav-left> <a href="/CustomComponents/" class="app-logo">MattPChoy</a> </template>
+    <template #nav-right
+      > <a href="/CustomComponents/inputs">Inputs</a> <a href="/CustomComponents/layouts">Layout</a>
 
       <div class="pointer changeDarkThemeButton" @click="onThemeNameClicked">
-        <FontAwesomeIcon v-if="isDark" icon="fa-solid fa-moon"/>
-        <FontAwesomeIcon v-else icon="fa-solid fa-sun"/>
+         <FontAwesomeIcon v-if="isDark" icon="fa-solid fa-moon" /> <FontAwesomeIcon
+          v-else
+          icon="fa-solid fa-sun"
+        />
       </div>
-    </template>
-  </NavBar>
-  <router-view></router-view>
+       </template
+    > </NavBar
+  > <router-view></router-view>
   <div class="footer-container">
-    <span>Created by Matt Choy</span>
-
-    <span>
-      <font-awesome-icon icon="fab fa-github"/>
-      <a class="github-link" href="https://github.com/MattPChoy/CustomCompoments">Custom Components</a>
-    </span>
+     <span>Created by Matt Choy</span> <span
+      > <font-awesome-icon icon="fab fa-github" /> <a
+        class="github-link"
+        href="https://github.com/MattPChoy/CustomCompoments"
+        >Custom Components</a
+      > </span
+    >
   </div>
+
 </template>
 
 <script setup lang="ts">
-import NavBar from "./components/Layout/NavBar.vue";
-import {isDark, toggleTheme} from "./styles/theming";
-import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
+import NavBar from './components/Layout/NavBar.vue'
+import { isDark, toggleTheme } from './styles/theming'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 function onThemeNameClicked() {
-  toggleTheme();
+  toggleTheme()
 }
 </script>
 
@@ -68,3 +68,4 @@ a {
   border-radius: var(--space-1);
 }
 </style>
+

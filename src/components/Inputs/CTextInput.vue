@@ -1,24 +1,23 @@
 <template>
-  <InputComponentWrapper :label="label" :show-validation="showValidation">
-    <template #input>
-      <component :is="componentName"
-                 :type="componentType"
-                 :value="inputValue"
-                 @input="onInput"
-                 class="input"
-                 :disabled="disabled" :rows="rows"
-      />
-    </template>
-
-    <template #validation v-if="validationError">
-      {{ validationError }}
-    </template>
-  </InputComponentWrapper>
+   <InputComponentWrapper :label="label" :show-validation="showValidation"
+    > <template #input
+      > <component
+        :is="componentName"
+        :type="componentType"
+        :value="inputValue"
+        @input="onInput"
+        class="input"
+        :disabled="disabled"
+        :rows="rows"
+      /> </template
+    > <template #validation v-if="validationError"> {{ validationError }} </template>
+    </InputComponentWrapper
+  >
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue';
-import InputComponentWrapper from "./InputComponentWrapper.vue";
+import { ref, computed, watch } from 'vue'
+import InputComponentWrapper from './InputComponentWrapper.vue'
 
 const props = defineProps({
   modelValue: { type: String, required: true },
@@ -30,38 +29,41 @@ const props = defineProps({
   multiline: { type: Boolean, default: false },
   rows: { type: Number, default: 3 },
   password: { type: Boolean, default: false },
-  showValidation: { type: Boolean, default: true }
-});
+  showValidation: { type: Boolean, default: true },
+})
 
-const emit = defineEmits(['update:modelValue']);
+const emit = defineEmits(['update:modelValue'])
 
+const inputValue = ref<String>('')
+const hadInput = ref(false)
 
-const inputValue = ref<String>("");
-const hadInput = ref(false);
-
-watch(() => props.modelValue, () => {
-  inputValue.value = props.modelValue;
-}, { immediate: true})
+watch(
+  () => props.modelValue,
+  () => {
+    inputValue.value = props.modelValue
+  },
+  { immediate: true }
+)
 
 const validationError = computed(() => {
   if (!hadInput.value) {
-    return false;
+    return false
   }
   if (props.required && inputValue.value?.length === 0) {
-    return "Required input";
+    return 'Required input'
   }
   if (props.validationFunc) {
-    return props.validationFunc(inputValue);
+    return props.validationFunc(inputValue)
   }
-  return false;
-});
+  return false
+})
 
-const componentName = computed(() => props.multiline ? "textarea" : "input");
-const componentType = computed(() => props.password ? "password" : "text");
+const componentName = computed(() => (props.multiline ? 'textarea' : 'input'))
+const componentType = computed(() => (props.password ? 'password' : 'text'))
 
 function onInput(event: Event) {
-  hadInput.value = true;
+  hadInput.value = true
   inputValue.value = (event.target as HTMLInputElement).value
-  emit('update:modelValue', inputValue.value);
+  emit('update:modelValue', inputValue.value)
 }
 </script>

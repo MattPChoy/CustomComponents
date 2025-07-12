@@ -1,15 +1,19 @@
 
 <template>
-  <div class="input-container">
-    <label v-if="label" class="input-label"> {{ label }}</label>
 
+  <div class="input-container">
+     <label v-if="label" class="input-label"> {{ label }}</label
+    >
     <div class="input-wrapper">
-      <slot name="input"/>
+       <slot name="input" />
       <div v-if="showValidation" class="validation-container error">
-        <slot name="validation"/>
+         <slot name="validation" />
       </div>
+
     </div>
+
   </div>
+
 </template>
 
 <script setup lang="ts">
@@ -20,9 +24,8 @@
 
 defineProps({
   label: { type: String },
-  showValidation: { type: Boolean, default: true }
-});
-
+  showValidation: { type: Boolean, default: true },
+})
 </script>
 
 <style>
@@ -83,3 +86,4 @@ input:disabled, .input-disabled{
   color: var(--error-color);
 }
 </style>
+

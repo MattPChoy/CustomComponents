@@ -1,22 +1,26 @@
 <template>
-  <input-component-wrapper :label="label" :show-validation="false">
-    <template #input>
-      <div class="toggle-input-container" @click="onToggle" :class="{'true': model}">
-        <div class="toggle-pill"/>
+   <input-component-wrapper :label="label" :show-validation="false"
+    > <template #input
+      >
+      <div class="toggle-input-container" @click="onToggle" :class="{ true: model }">
+
+        <div class="toggle-pill" />
+
       </div>
-    </template>
-  </input-component-wrapper>
+       </template
+    > </input-component-wrapper
+  >
 </template>
 
 <script setup lang="ts">
-import InputComponentWrapper from "./InputComponentWrapper.vue";
+import InputComponentWrapper from './InputComponentWrapper.vue'
 
-const model = defineModel({type: Boolean, required: true});
+const model = defineModel({ type: Boolean, required: true })
 defineProps({
-  label: { type: String }
+  label: { type: String },
 })
 function onToggle() {
-  model.value = !model.value;
+  model.value = !model.value
 }
 </script>
 

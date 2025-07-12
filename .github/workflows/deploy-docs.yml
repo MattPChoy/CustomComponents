@@ -29,7 +29,7 @@ jobs:
           npm clean-install
           npm run build:docs
         env:
-          VITE_BASE_URL: "${{steps.setup.outputs.base_url}}"
+          VITE_BASE_URL: '${{steps.setup.outputs.base_url}}'
 
       - name: Upload Pages Artifact
         uses: actions/upload-pages-artifact@v3

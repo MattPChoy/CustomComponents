@@ -1,37 +1,37 @@
 /* Using vueuse/core useDark to set light or dark theme on the root element*/
 :root.dark {
-    --bg-main: #242424;
-    --bg-main-10: color-mix(in srgb, var(--bg-main) 90%, white);
-    --bg-main-20: color-mix(in srgb, var(--bg-main) 80%, white);
-    --bg-main-30: color-mix(in srgb, var(--bg-main) 70%, white);
-    --bg-main-40: color-mix(in srgb, var(--bg-main) 60%, white);
+  --bg-main: #242424;
+  --bg-main-10: color-mix(in srgb, var(--bg-main) 90%, white);
+  --bg-main-20: color-mix(in srgb, var(--bg-main) 80%, white);
+  --bg-main-30: color-mix(in srgb, var(--bg-main) 70%, white);
+  --bg-main-40: color-mix(in srgb, var(--bg-main) 60%, white);
 
-    --font-primary: color-mix(in srgb, #FFFFFF 80%, black);
-    --font-primary-lighter: color-mix(in srgb, #FFFFFF 90%, black);
-    --font-secondary: color-mix(in srgb, #FFFFFF 60%, black);
+  --font-primary: color-mix(in srgb, #ffffff 80%, black);
+  --font-primary-lighter: color-mix(in srgb, #ffffff 90%, black);
+  --font-secondary: color-mix(in srgb, #ffffff 60%, black);
 
-    --error-color: red;
-    --warning-color: orange;
+  --error-color: red;
+  --warning-color: orange;
 
-    --primary: #27e8a7;
+  --primary: #27e8a7;
 }
 
 :root.light {
-    --bg-main: #ffffff;
-    --bg-main-10: color-mix(in srgb, var(--bg-main) 90%, black);
-    --bg-main-20: color-mix(in srgb, var(--bg-main) 80%, black);
-    --bg-main-30: color-mix(in srgb, var(--bg-main) 70%, black);
-    --bg-main-40: color-mix(in srgb, var(--bg-main) 60%, black);
+  --bg-main: #ffffff;
+  --bg-main-10: color-mix(in srgb, var(--bg-main) 90%, black);
+  --bg-main-20: color-mix(in srgb, var(--bg-main) 80%, black);
+  --bg-main-30: color-mix(in srgb, var(--bg-main) 70%, black);
+  --bg-main-40: color-mix(in srgb, var(--bg-main) 60%, black);
 
-    --font-primary: color-mix(in srgb, #000000 80%, white);
-    --font-secondary: color-mix(in srgb, #000000 60%, white);
+  --font-primary: color-mix(in srgb, #000000 80%, white);
+  --font-secondary: color-mix(in srgb, #000000 60%, white);
 }
 
 :root {
-    background-color: var(--bg-main);
-    color: var(--font-primary);
+  background-color: var(--bg-main);
+  color: var(--font-primary);
 }
 
 .error {
-    color: var(--error-color);
+  color: var(--error-color);
 }
