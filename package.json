@@ -1,21 +1,22 @@
 {
   "name": "@mattpchoy/customcomponents",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "type": "module",
-  "files": ["dist"],
-  "main": "./dist/matt-custom-components.umd.cjs",
-  "module": "./dist/matt-custom-components.js",
-  "types": "./dist/main.d.ts",
+  "files": [
+    "dist"
+  ],
+  "main": "dist/main.js",
+  "types": "dist/main.d.ts",
   "scripts": {
     "dev": "vite",
-    "build:types": "vue-tsc -b tsconfig.build.json",
-    "build": "npm run build:types && vite build",
+    "build": "tsc --p ./tsconfig.lib.json && vite build",
     "preview": "vite preview"
   },
   "exports": {
     ".": {
-      "import": "./dist/matt-custom-components.js",
-      "require": "./dist/matt-custom-components.umd.cjs"
+      "types": "./dist/main.d.ts",
+      "import": "./dist/main.es.js",
+      "require": "./dist/main.umd.js"
     },
     "./style.css": "./dist/style.css",
     "./theme.css": "./dist/theme.css",
@@ -38,6 +39,7 @@
     "@vue/tsconfig": "^0.7.0",
     "typescript": "~5.8.3",
     "vite": "^7.0.0",
+    "vite-plugin-dts": "^4.5.4",
     "vue-tsc": "^2.2.10"
   },
   "publishConfig": {

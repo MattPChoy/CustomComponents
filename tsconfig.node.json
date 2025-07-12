@@ -1,29 +1,10 @@
 {
   "compilerOptions": {
-    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
-    "target": "ES2023",
-    "lib": ["ES2023", "dom"],
-    "outDir": "dist",
-    "module": "ESNext",
-    "rootDir": "src",
+    "composite": true,
     "skipLibCheck": true,
-
-    /* Bundler mode */
+    "module": "ESNext",
     "moduleResolution": "bundler",
-    "allowImportingTsExtensions": false,
-    "verbatimModuleSyntax": true,
-    "moduleDetection": "force",
-    "declaration": true,
-
-    /* Linting */
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true,
-
-    "composite": true
+    "allowSyntheticDefaultImports": true
   },
-  "include": ["src"],
-  "exclude": ["src/App.vue", "src/main.ts", "vite.config.ts", "vite.config.*.ts"]
+  "include": ["vite.config.ts"]
 }

@@ -1,18 +1,25 @@
 {
-  "references": [
-    { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.node.json" }
-  ],
   "compilerOptions": {
-    "noEmit": false,
-    "outDir": "dist",
-    "rootDir": "src",
-    "declaration": true,
-    // Generate .js files too which contain the functionality
-    "emitDeclarationOnly": false,
-    "lib": ["esnext", "dom"]
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true
   },
-  // Exclude these files from the bundle.
-  "exclude": ["src/App.vue", "src/main.ts", "vite.config.ts", "vite.config.*.ts"],
-  "include": ["src"],
+  "include": ["src", "lib"],
+  "references": [{ "path": "./tsconfig.node.json" }]
 }

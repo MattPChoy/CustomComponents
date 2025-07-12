@@ -1,32 +1,39 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { resolve } from "path";
+import dts from 'vite-plugin-dts'
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [vue()],
+  plugins: [
+    vue(),
+    dts({ 
+      entryRoot: 'src',
+      include: ['src/lib.ts', 'src/components', 'src/models', 'src/styles'],
+      outDir: 'dist',
+      rollupTypes: true,
+    })
+  ],
   base: "/CustomComponents/",
   server: {
     port: 4000
   },
-  build:{
+  build: {
+    copyPublicDir: false,
     lib: {
-      // The file that is loaded when someone imports the plugin into the app
-      entry: resolve(__dirname, "src/index.ts"),
+      entry: resolve(__dirname, 'src/lib.ts'),
       name: "MattCustomComponents",
-      fileName: "matt-custom-components"
+      formats: ['es', 'umd'],
+      fileName: (format) => `main.${format}.js`
     },
     rollupOptions: {
-      // make sure to externalize deps that shouldn't be bundled
-      // into your library
-      external: ["vue"],
+      external: ['vue'],
       output: {
-        // Provide global variables to use in the UMD build
-        // for externalized deps
+        assetFileNames: 'assets/[name][extname]',
         globals: {
-          vue: "Vue",
-        },
+          vue: "Vue"
+        }
       },
-    },
+    }
   },
 });
