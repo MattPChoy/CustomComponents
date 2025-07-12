@@ -21,7 +21,7 @@
           <li><code>nav-left</code>: Content to display on the left side of the nav bar.</li>
 
           <li>
-            <code>nav-right</code>: Content to display on the right side of the nav bar. This
+             <code>nav-right</code>: Content to display on the right side of the nav bar. This
             content is inside a flexbox container with a gap of 16px between child elements.
           </li>
 
@@ -59,7 +59,7 @@
         <ul>
 
           <li>
-            <code>rows</code>(object[] | Function): The rows to display, or a function that
+             <code>rows</code>(object[] | Function): The rows to display, or a function that
             retrieves the rows. The getter function gets a <code>PaginationParams</code> type.
           </li>
 
@@ -74,17 +74,17 @@
           <li><code>button-bar</code>A bar just above the table, allowing you to embed buttons.</li>
 
           <li>
-            <code>button-bar-left</code>If not using button-bar, a container on the top-right of the
-            table.
-          </li>
-
-          <li>
-            <code>button-bar-right</code>If not using button-bar, a container on the top-right of
+             <code>button-bar-left</code>If not using button-bar, a container on the top-right of
             the table.
           </li>
 
           <li>
-            <code>col_{key}</code>A slot for overriding the rendering of a given row, where
+             <code>button-bar-right</code>If not using button-bar, a container on the top-right of
+            the table.
+          </li>
+
+          <li>
+             <code>col_{key}</code>A slot for overriding the rendering of a given row, where
             <code>key</code> is the
           </li>
 
@@ -182,3 +182,4 @@ const tableOptions = computed<TableOptions<TableDataType>>(() => ({
 <style scoped>
 
 </style>
+

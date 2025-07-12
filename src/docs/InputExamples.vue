@@ -27,18 +27,18 @@
         <ul>
            <input-prop-descriptions />
           <li>
-            <code>validationFunc</code>: (input: string) => string | undefined: Optional validation
+             <code>validationFunc</code>: (input: string) => string | undefined: Optional validation
             argument that can be used to run custom validation on the function. Shows a validation
             message under the input.
           </li>
 
           <li>
-            <code>password</code> (boolean): Whether the input is a password field (i.e. censor the
+             <code>password</code> (boolean): Whether the input is a password field (i.e. censor the
             data)
           </li>
 
           <li>
-            <code>multiline</code> (boolean): Whether the input should expand to display multiple
+             <code>multiline</code> (boolean): Whether the input should expand to display multiple
             lines at a time.
           </li>
 
@@ -69,12 +69,12 @@
         <ul>
            <input-prop-descriptions />
           <li>
-            <code>min</code>(Number): Minimum value of the input. If the value is less than this a
+             <code>min</code>(Number): Minimum value of the input. If the value is less than this a
             validation message will appear.
           </li>
 
           <li>
-            <code>max</code>(Number): Maximum value of the input. If the value is greater than this
+             <code>max</code>(Number): Maximum value of the input. If the value is greater than this
             a validation message will appear.
           </li>
 
@@ -160,3 +160,4 @@ const fileData = ref(new FileInputData())
   flex-wrap: wrap;
 }
 </style>
+

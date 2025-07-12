@@ -34,7 +34,7 @@ const props = defineProps({
 
 const emit = defineEmits(['update:modelValue'])
 
-const inputValue = ref<String>('')
+const inputValue = ref('')
 const hadInput = ref(false)
 
 watch(
@@ -67,3 +67,4 @@ function onInput(event: Event) {
   emit('update:modelValue', inputValue.value)
 }
 </script>
+

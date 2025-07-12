@@ -51,7 +51,8 @@ const onDragLeave = () => {
 }
 
 const emit = defineEmits({
-  update: (_: File[]) => true,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  update: (_files: File[]) => true,
 })
 
 const onDrop = (e: DragEvent) => {
@@ -103,3 +104,4 @@ function onFilesSelected(e: Event) {
   transition: background-color 0.3s;
 }
 </style>
+

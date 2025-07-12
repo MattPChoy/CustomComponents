@@ -106,7 +106,7 @@
 </template>
 
 <script setup lang="ts" generic="T extends Record<string, any>">
-import { computed, onMounted, ref, watch, type Ref } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import type { PaginationParams, TableOptions } from './Table/TableOptions'
 import CTextInput from '../Inputs/CTextInput.vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -117,8 +117,7 @@ const props = defineProps<{
   options: TableOptions<T>
 }>()
 
-// @ts-ignore
-const paginatedRows: Ref<T[]> = ref<T[]>([])
+const paginatedRows = ref<T[]>([])
 const currentPage = ref(0)
 const searchString = ref('')
 const loading = ref(false)

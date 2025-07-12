@@ -9,8 +9,9 @@
   <li><code>disabled</code> (boolean): Whether the input is locked for input.</li>
 
   <li>
-    <code>showValidation</code> (boolean): Whether to show the validation block below the input.
+     <code>showValidation</code> (boolean): Whether to show the validation block below the input.
     Defaults to true
   </li>
 
 </template>
+
