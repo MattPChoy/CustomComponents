@@ -78,7 +78,7 @@
     </DocWrapper>
     <DocWrapper title="File Input">
       <template #usage>
-        <CFileUpload
+        <CFilePicker
           :draggable="fileData.draggable"
           :disabled="fileData.disabled"
           :multiple="fileData.multiple" />
@@ -148,7 +148,7 @@ import { ref } from 'vue'
 import CNumberInput from '../components/Inputs/CNumberInput.vue'
 import InputPropDescriptions from './meta/InputPropDescriptions.vue'
 import CToggleInput from '../components/Inputs/CToggleInput.vue'
-import CFileUpload from '../components/Inputs/CFileUpload.vue'
+import CFilePicker from '../components/Inputs/CFilePicker.vue'
 import CButton from '../components/Inputs/CButton.vue'
 import CDropdown from '../components/Inputs/CDropdown.vue'
 import CDateSelector from '../components/Inputs/CDateSelector.vue'
