@@ -164,7 +164,8 @@ async function getNextPage() {
         sortByProperty: sortColumn.value,
         sortDirection: sortDirection.value,
       })
-
+      
+      // @ts-ignore: Disable UnwrapRefSimple<T> assignment error
       paginatedRows.value.push(...rows)
       if (rows.length < pageSize.value) loadedAllPaginatedEntries.value = true
     } catch (error) {
@@ -207,7 +208,10 @@ async function onClickNext() {
 }
 
 const filteredRows = computed<T[]>(() => {
-  if (usePagination.value) return paginatedRows.value
+  if (usePagination.value) {
+    // paginatedRows.value is UnwrapRefSimple<T>[] internally, cast to T[]
+    return paginatedRows.value as unknown as T[]
+  }
 
   const filtered = (props.rows as T[]).filter((row) =>
     options.useSearch
@@ -225,12 +229,14 @@ const filteredRows = computed<T[]>(() => {
 
       if (typeof aVal === 'number' && typeof bVal === 'number')
         return (aVal - bVal) * direction
+
       return aVal?.toString().localeCompare(bVal?.toString()) * direction
     })
   }
 
   return filtered
 })
+
 
 const rowsToDisplay = computed(() => {
   if (usePagination.value) {

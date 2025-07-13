@@ -124,6 +124,12 @@
         <p v-else>You have no favourite fruit</p>
       </template>
     </DocWrapper>
+
+    <DocWrapper title="Date Selector">
+        <template #usage>
+          <CDateSelector/>
+        </template>
+    </DocWrapper>
     <DocWrapper title="Button">
       <template #usage>
         <CButton text="Click Me" :disabled="buttonDisabled"></CButton>
@@ -145,6 +151,7 @@ import CToggleInput from '../components/Inputs/CToggleInput.vue'
 import CFileUpload from '../components/Inputs/CFileUpload.vue'
 import CButton from '../components/Inputs/CButton.vue'
 import CDropdown from '../components/Inputs/CDropdown.vue'
+import CDateSelector from '../components/Inputs/CDateSelector.vue'
 
 class InputData {
   public required: boolean = false
