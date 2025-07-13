@@ -1,108 +1,84 @@
 <template>
-
   <div class="table-container">
-
     <div class="table-header-container">
-
       <div class="button-bar-container">
-         <slot name="button-bar"
-          > <slot name="button-bar-left" class="button-bar-left"
-            >
+        <slot name="button-bar">
+          <slot name="button-bar-left" class="button-bar-left">
             <div></div>
-             </slot
-          > <slot name="button-bar-right" class="button-bar-right"></slot> </slot
-        >
+          </slot>
+          <slot name="button-bar-right" class="button-bar-right"></slot>
+        </slot>
       </div>
 
       <div class="search-container" v-if="options.useSearch">
-
         <div />
 
         <div class="flex-row gap-x-1">
-           <font-awesome-icon icon="fas fa-search" /> <c-text-input
+          <font-awesome-icon icon="fas fa-search" />
+          <c-text-input
             v-model="searchString"
             :show-validation="false"
-            @update:modelValue="resetTableData"
-          />
+            @update:modelValue="resetTableData" />
         </div>
-
       </div>
 
       <table class="table">
-
         <thead>
-
           <tr>
-
             <th
               v-for="column in tableColumns"
               :key="column.key"
-              @click="() => onColumnClicked(column.key)"
-            >
-               {{ column.displayName }} <font-awesome-icon
+              @click="() => onColumnClicked(column.key)">
+              {{ column.displayName }}
+              <font-awesome-icon
                 :icon="sortIcon"
-                :class="{ hidden: sortColumn !== column.key }"
-              />
+                :class="{ hidden: sortColumn !== column.key }" />
             </th>
-
           </tr>
-
         </thead>
 
         <tbody>
-
           <tr v-if="loading && usePagination">
-
             <td :colspan="tableColumns.length">
-               <span><font-awesome-icon icon="fas fa-spinner" spin /></span>
+              <span><font-awesome-icon icon="fas fa-spinner" spin /></span>
             </td>
-
           </tr>
 
           <tr v-for="row in rowsToDisplay" :key="keySelector(row)">
-
             <td v-for="col in tableColumns" :key="col.key">
-               <slot :name="'col_' + col.key" :row="row"> {{ row[col.key] }} </slot>
+              <slot :name="'col_' + col.key" :row="row">
+                {{ row[col.key] }}
+              </slot>
             </td>
-
           </tr>
 
           <tr v-if="filteredRows.length === 0 && !loading">
-
-            <td :colspan="tableColumns.length"> <span>No records found</span> </td>
-
+            <td :colspan="tableColumns.length">
+              <span>No records found</span>
+            </td>
           </tr>
-
         </tbody>
-
       </table>
 
       <div class="page-selector-container" v-if="numPages >= 1">
-
         <div
           class="page-selector-item"
           v-for="i in numPages"
           :key="i"
           @click="() => setPage(i - 1)"
-          :class="{ 'current-page': i - 1 === currentPage }"
-        >
-           {{ i }}
+          :class="{ 'current-page': i - 1 === currentPage }">
+          {{ i }}
         </div>
 
         <div
           v-if="usePagination && !loadedAllPaginatedEntries && numPages > 0"
           class="page-selector-item"
-          @click="onClickNext"
-        >
-           Next
+          @click="onClickNext">
+          Next
         </div>
-
       </div>
-
     </div>
-
   </div>
-
 </template>
 
 <script setup lang="ts" generic="T extends Record<string, any>">
@@ -128,7 +104,9 @@ const options = props.options
 const keySelector = options.keySelector
 
 const tableColumns = computed(() => {
-  const sourceRows = usePagination.value ? paginatedRows.value : (props.rows as T[])
+  const sourceRows = usePagination.value
+    ? paginatedRows.value
+    : (props.rows as T[])
   if (sourceRows.length === 0) return []
   const keys = Object.keys(sourceRows[0])
 
@@ -153,14 +131,20 @@ const tableColumns = computed(() => {
     }))
 })
 
-const sortColumn = ref(options.defaultSortColumn || tableColumns.value[0]?.key || '')
+const sortColumn = ref(
+  options.defaultSortColumn || tableColumns.value[0]?.key || ''
+)
 const sortDirection = ref(SortDirection.Ascending)
 const sortIcon = computed(() =>
-  sortDirection.value === SortDirection.Ascending ? 'fas fa-sort-up' : 'fas fa-sort-down'
+  sortDirection.value === SortDirection.Ascending
+    ? 'fas fa-sort-up'
+    : 'fas fa-sort-down'
 )
 
 const pageSize = computed(() => options.pageSize)
-const numPages = computed(() => Math.ceil(filteredRows.value.length / pageSize.value))
+const numPages = computed(() =>
+  Math.ceil(filteredRows.value.length / pageSize.value)
+)
 
 const paginationRequestTimer = ref<number>()
 
@@ -171,7 +155,9 @@ async function getNextPage() {
 
   paginationRequestTimer.value = window.setTimeout(async () => {
     try {
-      const rows = await (props.rows as (params: PaginationParams) => Promise<T[]>)({
+      const rows = await (
+        props.rows as (params: PaginationParams) => Promise<T[]>
+      )({
         limit: pageSize.value,
         offset: paginatedRows.value.length,
         searchString: searchString.value,
@@ -237,7 +223,8 @@ const filteredRows = computed<T[]>(() => {
       const bVal = b[sortColumn.value as keyof T]
       const direction = sortDirection.value === SortDirection.Ascending ? 1 : -1
 
-      if (typeof aVal === 'number' && typeof bVal === 'number') return (aVal - bVal) * direction
+      if (typeof aVal === 'number' && typeof bVal === 'number')
+        return (aVal - bVal) * direction
       return aVal?.toString().localeCompare(bVal?.toString()) * direction
     })
   }
@@ -354,4 +341,3 @@ th {
   display: none;
 }
 </style>
-

@@ -1,19 +1,13 @@
-
 <template>
-
   <div class="input-container">
-     <label v-if="label" class="input-label"> {{ label }}</label
-    >
+    <label v-if="label" class="input-label"> {{ label }}</label>
     <div class="input-wrapper">
-       <slot name="input" />
+      <slot name="input" />
       <div v-if="showValidation" class="validation-container error">
-         <slot name="validation" />
+        <slot name="validation" />
       </div>
-
     </div>
-
   </div>
-
 </template>
 
 <script setup lang="ts">
@@ -51,7 +45,8 @@ defineProps({
   flex-direction: column;
 }
 
-input, textarea {
+input,
+textarea, select {
   padding: 4px;
   border: 1px solid var(--font-primary);
   border-radius: 4px;
@@ -59,9 +54,13 @@ input, textarea {
 
   background-color: var(--bg-main-10);
   color: var(--font-primary);
+
+  &:hover {
+    background-color: var(--bg-main-20);
+  }
 }
 
-input {
+input, select {
   height: 24px;
 }
 
@@ -69,7 +68,9 @@ input:focus {
   outline-style: solid;
 }
 
-input:disabled, .input-disabled{
+input:disabled,
+.input-disabled,
+select:disabled {
   opacity: 0.6;
   background-color: var(--bg-main-40);
   cursor: not-allowed;
@@ -86,4 +87,3 @@ input:disabled, .input-disabled{
   color: var(--error-color);
 }
 </style>
-

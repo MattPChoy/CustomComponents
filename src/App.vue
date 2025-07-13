@@ -1,28 +1,30 @@
 <template>
-   <NavBar
-    > <template #nav-left> <a href="/CustomComponents/" class="app-logo">MattPChoy</a> </template>
-    <template #nav-right
-      > <a href="/CustomComponents/inputs">Inputs</a> <a href="/CustomComponents/layouts">Layout</a>
+  <NavBar>
+    <template #nav-left>
+      <a href="/CustomComponents/" class="app-logo">MattPChoy</a>
+    </template>
+    <template #nav-right>
+      <a href="/CustomComponents/inputs">Inputs</a>
+      <a href="/CustomComponents/layouts">Layout</a>
 
       <div class="pointer changeDarkThemeButton" @click="onThemeNameClicked">
-         <FontAwesomeIcon v-if="isDark" icon="fa-solid fa-moon" /> <FontAwesomeIcon
-          v-else
-          icon="fa-solid fa-sun"
-        />
+        <FontAwesomeIcon v-if="isDark" icon="fa-solid fa-moon" />
+        <FontAwesomeIcon v-else icon="fa-solid fa-sun" />
       </div>
-       </template
-    > </NavBar
-  > <router-view></router-view>
+    </template>
+  </NavBar>
+  <router-view></router-view>
   <div class="footer-container">
-     <span>Created by Matt Choy</span> <span
-      > <font-awesome-icon icon="fab fa-github" /> <a
+    <span>Created by Matt Choy</span>
+    <span>
+      <font-awesome-icon icon="fab fa-github" />
+      <a
         class="github-link"
         href="https://github.com/MattPChoy/CustomCompoments"
         >Custom Components</a
-      > </span
-    >
+      >
+    </span>
   </div>
-
 </template>
 
 <script setup lang="ts">
@@ -68,4 +70,3 @@ a {
   border-radius: var(--space-1);
 }
 </style>
-

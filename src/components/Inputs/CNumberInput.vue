@@ -1,7 +1,7 @@
 <template>
-   <InputComponentWrapper :label="label" :show-validation="showValidation"
-    > <template #input
-      > <input
+  <InputComponentWrapper :label="label" :show-validation="showValidation">
+    <template #input>
+      <input
         type="number"
         class="input"
         v-model="model"
@@ -11,13 +11,12 @@
         :required="required"
         :min="min"
         :max="max"
-        :step="step"
-      /> </template
-    > <template #validation
-      > <span>{{ validationError }}</span
-      > </template
-    > </InputComponentWrapper
-  >
+        :step="step" />
+    </template>
+    <template #validation>
+      <span>{{ validationError }}</span>
+    </template>
+  </InputComponentWrapper>
 </template>
 
 <script setup lang="ts">
@@ -73,4 +72,3 @@ input {
   min-width: 50px;
 }
 </style>
-

@@ -1,17 +1,24 @@
 <template>
-
-  <li><code>modelValue</code> (string, required): Normal Vue v-model, component data.</li>
-
-  <li><code>label</code> (string): Label to be displayed next to the component.</li>
-
-  <li><code>required</code> (boolean): Whether the input is allowed to be non-empty.</li>
-
-  <li><code>disabled</code> (boolean): Whether the input is locked for input.</li>
-
   <li>
-     <code>showValidation</code> (boolean): Whether to show the validation block below the input.
-    Defaults to true
+    <code>modelValue</code> (string, required): Normal Vue v-model, component
+    data.
   </li>
 
-</template>
+  <li>
+    <code>label</code> (string): Label to be displayed next to the component.
+  </li>
 
+  <li>
+    <code>required</code> (boolean): Whether the input is allowed to be
+    non-empty.
+  </li>
+
+  <li>
+    <code>disabled</code> (boolean): Whether the input is locked for input.
+  </li>
+
+  <li>
+    <code>showValidation</code> (boolean): Whether to show the validation block
+    below the input. Defaults to true
+  </li>
+</template>

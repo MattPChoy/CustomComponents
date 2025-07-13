@@ -1,18 +1,20 @@
 <template>
-   <InputComponentWrapper :label="label" :show-validation="showValidation"
-    > <template #input
-      > <component
+  <InputComponentWrapper :label="label" :show-validation="showValidation">
+    <template #input>
+      <component
         :is="componentName"
         :type="componentType"
         :value="inputValue"
         @input="onInput"
         class="input"
         :disabled="disabled"
-        :rows="rows"
-      /> </template
-    > <template #validation v-if="validationError"> {{ validationError }} </template>
-    </InputComponentWrapper
-  >
+        :rows="rows" />
+    </template>
+
+    <template #validation v-if="validationError">
+      {{ validationError }}
+    </template>
+  </InputComponentWrapper>
 </template>
 
 <script setup lang="ts">
@@ -67,4 +69,3 @@ function onInput(event: Event) {
   emit('update:modelValue', inputValue.value)
 }
 </script>
-

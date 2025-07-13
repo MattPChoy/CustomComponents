@@ -1,15 +1,14 @@
 <template>
-   <input-component-wrapper :label="label" :show-validation="false"
-    > <template #input
-      >
-      <div class="toggle-input-container" @click="onToggle" :class="{ true: model }">
-
+  <input-component-wrapper :label="label" :show-validation="false">
+    <template #input>
+      <div
+        class="toggle-input-container"
+        @click="onToggle"
+        :class="{ true: model }">
         <div class="toggle-pill" />
-
       </div>
-       </template
-    > </input-component-wrapper
-  >
+    </template>
+  </input-component-wrapper>
 </template>
 
 <script setup lang="ts">
@@ -61,4 +60,3 @@ function onToggle() {
   transform: translateX(calc(var(--toggle-width) - var(--toggle-height)));
 }
 </style>
-

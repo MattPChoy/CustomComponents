@@ -1,7 +1,6 @@
 <template>
-   <input-component-wrapper
-    > <template #input
-      >
+  <input-component-wrapper>
+    <template #input>
       <div
         v-if="draggable"
         class="file-draggable-container"
@@ -9,22 +8,21 @@
         @dragover.prevent="onDragOver"
         @dragleave="onDragLeave"
         @drop.prevent="onDrop"
-        @click="onClick"
-      >
-
-        <div v-if="validationError.length !== 0" class="error"> {{ validationError }} </div>
-         <slot v-else name="content"> {{ fileMessage }} </slot>
+        @click="onClick">
+        <div v-if="validationError.length !== 0" class="error">
+          {{ validationError }}
+        </div>
+        <slot v-else name="content"> {{ fileMessage }} </slot>
       </div>
-       <input
+      <input
         v-show="!draggable"
         type="file"
         @input="onFilesSelected"
         ref="fileInput"
         :multiple="multiple"
-        :disabled="disabled"
-      /> </template
-    > </input-component-wrapper
-  >
+        :disabled="disabled" />
+    </template>
+  </input-component-wrapper>
 </template>
 
 <script setup lang="ts">
@@ -99,9 +97,9 @@ function onFilesSelected(e: Event) {
   justify-content: center;
 }
 
-.file-draggable-container:hover:not(input:disabled, .input-disabled), .drag {
+.file-draggable-container:hover:not(input:disabled, .input-disabled),
+.drag {
   background-color: var(--bg-main-30);
   transition: background-color 0.3s;
 }
 </style>
-

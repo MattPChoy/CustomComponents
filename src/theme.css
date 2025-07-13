@@ -16,7 +16,7 @@
   --primary: #27e8a7;
   --primary-10: color-mix(in srgb, var(--primary) 90%, black);
   --primary-20: color-mix(in srgb, var(--primary) 80%, black);
-  --primary-30: color-mix(in srgb, var(--primary) 70%, black); 
+  --primary-30: color-mix(in srgb, var(--primary) 70%, black);
 }
 
 :root.light {
