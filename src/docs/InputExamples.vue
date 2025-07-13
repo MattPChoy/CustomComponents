@@ -127,7 +127,7 @@
 
     <DocWrapper title="Date Selector">
         <template #usage>
-          <CDateSelector/>
+          <CDateSelector label="Birthday"/>
         </template>
     </DocWrapper>
     <DocWrapper title="Button">
