@@ -4,8 +4,8 @@
       <a href="/CustomComponents/" class="app-logo">MattPChoy</a>
     </template>
     <template #nav-right>
-      <a href="/CustomComponents/inputs">Inputs</a>
-      <a href="/CustomComponents/layouts">Layout</a>
+      <a href="/CustomComponents/#/inputs">Inputs</a>
+      <a href="/CustomComponents/#/layouts">Layout</a>
 
       <div class="pointer changeDarkThemeButton" @click="onThemeNameClicked">
         <FontAwesomeIcon v-if="isDark" icon="fa-solid fa-moon" />

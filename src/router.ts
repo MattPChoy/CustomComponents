@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
+import { createRouter, createWebHashHistory, type RouteRecordRaw } from 'vue-router'
 import InputExamples from './docs/InputExamples.vue'
 import LayoutExamples from './docs/LayoutExamples.vue'
 import HomePage from './docs/HomePage.vue'
@@ -22,6 +22,6 @@ const routes: RouteRecordRaw[] = [
 ]
 
 export const router = createRouter({
-  history: createWebHistory('/CustomComponents'),
+  history: createWebHashHistory('/CustomComponents'),
   routes: routes,
 })

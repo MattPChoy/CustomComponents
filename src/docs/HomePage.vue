@@ -13,12 +13,12 @@
 
       <ul>
         <li>
-          <a href="/CustomComponents/Inputs"> Inputs </a>: Text input, file
+          <a href="/CustomComponents/#/inputs"> Inputs </a>: Text input, file
           upload components with validation, etc.
         </li>
 
         <li>
-          <a href="/CustomComponents/Layouts"> Layout </a>: NavBar, tables etc.
+          <a href="/CustomComponents/#/layouts"> Layout </a>: NavBar, tables etc.
         </li>
       </ul>
     </div>
