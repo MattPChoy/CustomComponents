@@ -6,14 +6,17 @@
   --bg-main-30: color-mix(in srgb, var(--bg-main) 70%, white);
   --bg-main-40: color-mix(in srgb, var(--bg-main) 60%, white);
 
-  --font-primary: color-mix(in srgb, #ffffff 80%, black);
-  --font-primary-lighter: color-mix(in srgb, #ffffff 90%, black);
-  --font-secondary: color-mix(in srgb, #ffffff 60%, black);
+  --font-primary: #ffffff;
+  --font-primary-lighter: color-mix(in srgb, var(--font-primary) 90%, black);
+  --font-secondary: color-mix(in srgb, var(--font-primary) 60%, black);
 
   --error-color: red;
   --warning-color: orange;
 
   --primary: #27e8a7;
+  --primary-10: color-mix(in srgb, var(--primary) 90%, black);
+  --primary-20: color-mix(in srgb, var(--primary) 80%, black);
+  --primary-30: color-mix(in srgb, var(--primary) 70%, black); 
 }
 
 :root.light {
@@ -29,7 +32,6 @@
 
 :root {
   background-color: var(--bg-main);
-  color: var(--font-primary);
 }
 
 .error {
