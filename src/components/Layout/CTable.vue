@@ -34,6 +34,7 @@
               :icon="sortIcon"
               :class="{ hidden: sortColumn !== column.key }"/>
           </th>
+          <th v-if="useActionRow"/>
         </tr>
         </thead>
 
