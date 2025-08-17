@@ -94,7 +94,7 @@ import {SortDirection} from '../../models/SortDirection'
 
 const props = defineProps<{
   rows: T[] | ((params: PaginationOptions) => Promise<T[]>)
-  options: TableOptions<T>,
+  options: Partial<TableOptions<T>>,
   useActionRow: boolean
 }>()
 
