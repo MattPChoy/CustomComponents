@@ -138,6 +138,16 @@
         </div>
       </template>
     </DocWrapper>
+
+    <DocWrapper title="Validated Form">
+      <template #usage>
+        <CValidatedForm v-model="validatedFormData.isValid">
+          <CNumberInput v-model="validatedFormData.numberValue" label="Numba"/>
+        </CValidatedForm>
+
+        <p>Form is valid? {{ validatedFormData.isValid ?'Yes!' : 'No!' }}</p>
+      </template>
+    </DocWrapper>
   </div>
 </template>
 
@@ -152,6 +162,7 @@ import CFilePicker from '../components/Inputs/CFilePicker.vue'
 import CButton from '../components/Inputs/CButton.vue'
 import CDropdown from '../components/Inputs/CDropdown.vue'
 import CDateSelector from '../components/Inputs/CDateSelector.vue'
+import CValidatedForm from '../components/Inputs/CValidatedForm.vue'
 
 class InputData {
   public required: boolean = false
@@ -190,6 +201,13 @@ class DropdownInputData {
   public selected: string | undefined = undefined;
 }
 const dropdownData = ref(new DropdownInputData());
+
+class ValidatedFormData {
+  public numberValue: number = 0;
+  public isValid: Boolean = true;
+}
+
+const validatedFormData = ref(new ValidatedFormData());
 </script>
 
 <style scoped>

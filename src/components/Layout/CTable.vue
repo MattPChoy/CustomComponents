@@ -11,52 +11,52 @@
       </div>
 
       <div class="search-container" v-if="options.useSearch">
-        <div />
+        <div/>
 
         <div class="flex-row gap-x-1">
-          <font-awesome-icon icon="fas fa-search" />
+          <font-awesome-icon icon="fas fa-search"/>
           <c-text-input
             v-model="searchString"
             :show-validation="false"
-            @update:modelValue="resetTableData" />
+            @update:modelValue="resetTableData"/>
         </div>
       </div>
 
       <table class="table">
         <thead>
-          <tr>
-            <th
-              v-for="column in tableColumns"
-              :key="column.key"
-              @click="() => onColumnClicked(column.key)">
-              {{ column.displayName }}
-              <font-awesome-icon
-                :icon="sortIcon"
-                :class="{ hidden: sortColumn !== column.key }" />
-            </th>
-          </tr>
+        <tr>
+          <th
+            v-for="column in tableColumns"
+            :key="column.key"
+            @click="() => onColumnClicked(column.key)">
+            {{ column.displayName }}
+            <font-awesome-icon
+              :icon="sortIcon"
+              :class="{ hidden: sortColumn !== column.key }"/>
+          </th>
+        </tr>
         </thead>
 
         <tbody>
-          <tr v-if="loading && usePagination">
-            <td :colspan="tableColumns.length">
-              <span><font-awesome-icon icon="fas fa-spinner" spin /></span>
-            </td>
-          </tr>
+        <tr v-if="loading && usePagination">
+          <td :colspan="tableColumns.length">
+            <span><font-awesome-icon icon="fas fa-spinner" spin/></span>
+          </td>
+        </tr>
 
-          <tr v-for="row in rowsToDisplay" :key="keySelector(row)">
-            <td v-for="col in tableColumns" :key="col.key">
-              <slot :name="'col_' + col.key" :row="row">
-                {{ row[col.key] }}
-              </slot>
-            </td>
-          </tr>
+        <tr v-for="row in rowsToDisplay" :key="keySelector(row)">
+          <td v-for="col in tableColumns" :key="col.key">
+            <slot :name="'col_' + col.key" :row="row">
+              {{ row[col.key] }}
+            </slot>
+          </td>
+        </tr>
 
-          <tr v-if="filteredRows.length === 0 && !loading">
-            <td :colspan="tableColumns.length">
-              <span>No records found</span>
-            </td>
-          </tr>
+        <tr v-if="filteredRows.length === 0 && !loading">
+          <td :colspan="tableColumns.length">
+            <span>No records found</span>
+          </td>
+        </tr>
         </tbody>
       </table>
 
@@ -82,11 +82,11 @@
 </template>
 
 <script setup lang="ts" generic="T extends Record<string, any>">
-import { computed, onMounted, ref, watch } from 'vue'
-import type { PaginationOptions, TableOptions } from './Table/TableOptions'
+import {computed, onMounted, ref, watch} from 'vue'
+import type {PaginationOptions, TableOptions} from './Table/TableOptions'
 import CTextInput from '../Inputs/CTextInput.vue'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { SortDirection } from '../../models/SortDirection'
+import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
+import {SortDirection} from '../../models/SortDirection'
 
 const props = defineProps<{
   rows: T[] | ((params: PaginationOptions) => Promise<T[]>)
@@ -108,7 +108,13 @@ const tableColumns = computed(() => {
     ? paginatedRows.value
     : (props.rows as T[])
   if (sourceRows.length === 0) return []
-  const keys = Object.keys(sourceRows[0])
+  let keys = Object.keys(sourceRows[0]);
+
+  // Filter down columns if options.columns populated.
+  const columnsKeys = Object.keys(options.columns || {})
+  if (columnsKeys.length > 0) {
+    keys = keys.filter(key => columnsKeys.includes(key))
+  }
 
   return keys
     .sort((a, b) => {
@@ -164,7 +170,7 @@ async function getNextPage() {
         sortByProperty: sortColumn.value,
         sortDirection: sortDirection.value,
       })
-      
+
       // @ts-ignore: Disable UnwrapRefSimple<T> assignment error
       paginatedRows.value.push(...rows)
       if (rows.length < pageSize.value) loadedAllPaginatedEntries.value = true
@@ -216,8 +222,8 @@ const filteredRows = computed<T[]>(() => {
   const filtered = (props.rows as T[]).filter((row) =>
     options.useSearch
       ? Object.values(row).some((v) =>
-          v?.toString().toLowerCase().includes(searchString.value.toLowerCase())
-        )
+        v?.toString().toLowerCase().includes(searchString.value.toLowerCase())
+      )
       : true
   )
 
