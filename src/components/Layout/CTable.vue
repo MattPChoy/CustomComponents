@@ -44,12 +44,16 @@
           </td>
         </tr>
 
-        <tr v-for="row in rowsToDisplay" :key="keySelector(row)">
+        <tr v-for="row in rowsToDisplay" :key="keySelector(row)" @click="() => onRowClicked(row)">
           <td v-for="col in tableColumns" :key="col.key">
             <slot :name="'col_' + col.key" :row="row">
               {{ row[col.key] }}
             </slot>
           </td>
+          
+          <slot name="action_col">
+            <td></td>
+          </slot>
         </tr>
 
         <tr v-if="filteredRows.length === 0 && !loading">
@@ -90,7 +94,8 @@ import {SortDirection} from '../../models/SortDirection'
 
 const props = defineProps<{
   rows: T[] | ((params: PaginationOptions) => Promise<T[]>)
-  options: TableOptions<T>
+  options: TableOptions<T>,
+  useActionRow: boolean
 }>()
 
 const paginatedRows = ref<T[]>([])
@@ -192,6 +197,12 @@ function resetTableData() {
   if (!usePagination.value) return
   invalidatePaginationData()
   getNextPage()
+}
+
+function onRowClicked(row: T) {
+  if (props.useActionRow && props.options.onRowClicked) {
+    props.options.onRowClicked(row);
+  }
 }
 
 function onColumnClicked(key: string) {
