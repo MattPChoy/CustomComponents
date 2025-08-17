@@ -83,13 +83,13 @@
 
 <script setup lang="ts" generic="T extends Record<string, any>">
 import { computed, onMounted, ref, watch } from 'vue'
-import type { PaginationParams, TableOptions } from './Table/TableOptions'
+import type { PaginationOptions, TableOptions } from './Table/TableOptions'
 import CTextInput from '../Inputs/CTextInput.vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { SortDirection } from '../../models/SortDirection'
 
 const props = defineProps<{
-  rows: T[] | ((params: PaginationParams) => Promise<T[]>)
+  rows: T[] | ((params: PaginationOptions) => Promise<T[]>)
   options: TableOptions<T>
 }>()
 
@@ -156,7 +156,7 @@ async function getNextPage() {
   paginationRequestTimer.value = window.setTimeout(async () => {
     try {
       const rows = await (
-        props.rows as (params: PaginationParams) => Promise<T[]>
+        props.rows as (params: PaginationOptions) => Promise<T[]>
       )({
         limit: pageSize.value,
         offset: paginatedRows.value.length,

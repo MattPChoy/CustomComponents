@@ -131,7 +131,7 @@ import NavBar from '../components/Layout/NavBar.vue'
 import CTable from '../components/Layout/CTable.vue'
 import { computed } from 'vue'
 import type {
-  PaginationParams,
+  PaginationOptions,
   TableOptions,
 } from '../components/Layout/Table/TableOptions'
 import { mockTableData } from './meta/TableData'
@@ -148,7 +148,7 @@ interface TableDataType {
 const tableRows = computed(() => mockTableData)
 
 const getTableRowAsync = (
-  retrievalOptions: PaginationParams
+  retrievalOptions: PaginationOptions
 ): Promise<TableDataType[]> => {
   return new Promise((resolve) => {
     setTimeout(() => {

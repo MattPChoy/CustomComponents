@@ -1,6 +1,6 @@
 import { SortDirection } from '../../../models/SortDirection'
 
-export interface PaginationParams {
+export interface PaginationOptions {
   limit: number // Page size
   offset: number // Current index
   searchString?: string
