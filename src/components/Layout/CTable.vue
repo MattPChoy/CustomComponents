@@ -51,7 +51,7 @@
             </slot>
           </td>
           
-          <slot name="action_col">
+          <slot name="action_col" v-if="useActionRow">
             <td></td>
           </slot>
         </tr>
@@ -95,7 +95,7 @@ import {SortDirection} from '../../models/SortDirection'
 const props = defineProps<{
   rows: T[] | ((params: PaginationOptions) => Promise<T[]>)
   options: Partial<TableOptions<T>>,
-  useActionRow: boolean
+  useActionRow?: boolean
 }>()
 
 const paginatedRows = ref<T[]>([])
@@ -200,7 +200,7 @@ function resetTableData() {
 }
 
 function onRowClicked(row: T) {
-  if (props.useActionRow && props.options.onRowClicked) {
+  if (props.options.onRowClicked) {
     props.options.onRowClicked(row);
   }
 }
