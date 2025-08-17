@@ -6,6 +6,7 @@ import InputComponentWrapper from './components/Inputs/InputComponentWrapper.vue
 
 import CTable from './components/Layout/CTable.vue'
 import NavBar from './components/Layout/NavBar.vue'
+import { TableOptions } from './components/Layout/Table/TableOptions'
 
 export {
   CFilePicker,
@@ -15,4 +16,5 @@ export {
   InputComponentWrapper,
   CTable,
   NavBar,
+  type TableOptions
 }
