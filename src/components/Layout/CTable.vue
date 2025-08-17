@@ -52,9 +52,9 @@
             </slot>
           </td>
           
-          <slot name="action_col" v-if="useActionRow">
-            <td></td>
-          </slot>
+          <td>
+            <slot name="action_col" v-if="useActionRow" :row="row"/>
+          </td>
         </tr>
 
         <tr v-if="filteredRows.length === 0 && !loading">
