@@ -353,7 +353,6 @@ table {
 td,
 th {
   padding: 8px;
-  text-align: center;
 }
 
 th {
