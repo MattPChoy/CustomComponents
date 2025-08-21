@@ -12,7 +12,7 @@
     "build": "tsc --p ./tsconfig.lib.json && vite build --config vite.config.lib.ts",
     "build:docs": "vue-tsc --noEmit && vite build --config vite.config.docs.ts",
     "preview": "vite preview",
-    "publish:github": "npm publish --registry=https://npm.pkg.github.com/",
+    "publish:github": "npm publish --registry=https://registry.npmjs.org/",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write ."
@@ -58,7 +58,7 @@
     "vue-tsc": "^2.2.10"
   },
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
+    "registry": "https://registry.npmjs.org/"
   },
   "repository": {
     "type": "git",
