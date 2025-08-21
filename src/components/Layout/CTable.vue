@@ -40,7 +40,7 @@
 
         <tbody>
         <tr v-if="loading && usePagination">
-          <td :colspan="tableColumns.length">
+          <td :colspan="tableColumns.length" style="text-align: center;">
             <span><font-awesome-icon icon="fas fa-spinner" spin/></span>
           </td>
         </tr>
@@ -58,7 +58,7 @@
         </tr>
 
         <tr v-if="filteredRows.length === 0 && !loading">
-          <td :colspan="tableColumns.length">
+          <td :colspan="tableColumns.length" style="text-align: center;">
             <span>No records found</span>
           </td>
         </tr>
