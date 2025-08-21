@@ -59,7 +59,7 @@
 
         <tr v-if="filteredRows.length === 0 && !loading">
           <td :colspan="tableColumns.length" style="text-align: center;">
-            <span>No records found</span>
+            No records found
           </td>
         </tr>
         </tbody>
