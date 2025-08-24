@@ -8,7 +8,7 @@ import CTable from './components/Layout/CTable.vue'
 import NavBar from './components/Layout/NavBar.vue'
 import COverlayContainer from './components/Overlays/COverlayContainer.vue'
 import ModalWrapper from './components/Overlays/ModalWrapper.vue'
-import OverlayPlugin, {type ModalData, type showModal } from './components/Overlays/OverlayPlugin.ts'
+import OverlayPlugin, {type ModalData, showModal } from './components/Overlays/OverlayPlugin.ts'
 
 import './spacing.css'
 import './style.css'
