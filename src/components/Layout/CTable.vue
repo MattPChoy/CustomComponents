@@ -352,7 +352,7 @@ table {
 
 td,
 th {
-  padding: 8px;
+  padding: 2px 8px;
 }
 
 th {

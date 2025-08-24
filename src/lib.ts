@@ -6,6 +6,11 @@ import InputComponentWrapper from './components/Inputs/InputComponentWrapper.vue
 
 import CTable from './components/Layout/CTable.vue'
 import NavBar from './components/Layout/NavBar.vue'
+
+import './spacing.css'
+import './style.css'
+import './theme.css'
+
 import { ColumnOptions, PaginationOptions, TableOptions } from './components/Layout/Table/TableOptions'
 
 export {
