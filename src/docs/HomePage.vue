@@ -1,5 +1,5 @@
 <template>
-  <div class="content-container">
+  <div class="modal-content-container">
     <div>
       <h1>Custom Components</h1>
 
@@ -19,6 +19,9 @@
 
         <li>
           <a href="/CustomComponents/#/layouts"> Layout </a>: NavBar, tables etc.
+        </li>
+        <li>
+          <a href="/CustomComponents/#/overlays"> Overlays </a>: Modals
         </li>
       </ul>
     </div>

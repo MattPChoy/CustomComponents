@@ -21,10 +21,10 @@ const buttonClass = computed(() => {
 })
 
 const emit = defineEmits({
-  onClick: (_: MouseEvent) => true,
+  click: (_: MouseEvent) => true,
 })
 
-const onClick = (e: MouseEvent) => emit('onClick', e)
+const onClick = (e: MouseEvent) => emit('click', e)
 </script>
 
 <style scoped lang="css">
@@ -32,6 +32,7 @@ button {
   height: var(--space-4);
   border-radius: var(--space-1);
   cursor: pointer;
+  min-width: 50px;
 }
 
 button.primary {
@@ -51,6 +52,7 @@ button.primary {
 }
 
 button.secondary {
+  border: 1px solid var(--bg-main-20);
   background-color: var(--bg-main-30);
 }
 </style>

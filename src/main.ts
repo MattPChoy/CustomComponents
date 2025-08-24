@@ -8,12 +8,14 @@ import { fas } from '@fortawesome/free-solid-svg-icons'
 import { faR } from '@fortawesome/free-solid-svg-icons/faR'
 import { fab } from '@fortawesome/free-brands-svg-icons'
 import { router } from './router'
+import OverlayPlugin from "./components/Overlays/OverlayPlugin.ts";
 
 setupFontAwesome()
 
 // Create the app instance
 const app = createApp(App)
 app.use(router)
+app.use(OverlayPlugin)
 
 // Mount the app
 app.mount('#app')

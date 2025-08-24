@@ -1,5 +1,5 @@
 <template>
-  <div class="content-container">
+  <div class="modal-content-container">
     <DocWrapper title="Text Input">
       <template #usage>
         <c-text-input

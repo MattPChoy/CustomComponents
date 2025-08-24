@@ -1,0 +1,30 @@
+<template>
+  <div class="modal-content-container">
+    <DocWrapper title="Overlays">
+      <template #usage>
+        <button @click="onShowOverlay">Show Modal</button>
+        
+        <c-text-input v-model="modalMessage" label="Modal message"/>
+      </template>
+    </DocWrapper>
+  </div>
+</template>
+
+<script setup lang="ts">
+
+import DocWrapper from "./meta/DocWrapper.vue";
+import {showModal} from "../components/Overlays/OverlayPlugin.ts";
+import ExampleModal from "./example/ExampleModal.vue";
+import CTextInput from "../components/Inputs/CTextInput.vue";
+import {ref} from "vue";
+
+const modalMessage = ref("Hello World!");
+
+function onShowOverlay() {
+  showModal(ExampleModal, { message: modalMessage.value, depth: 0 });
+}
+</script>
+
+<style scoped>
+
+</style>

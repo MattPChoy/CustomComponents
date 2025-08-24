@@ -52,12 +52,12 @@ h1 {
   cursor: pointer;
 }
 
-.content-container {
+.modal-content-container {
   display: flex;
   flex-direction: column;
   gap: var(--space-1);
 
-  margin: var(--space-4);
+  margin: var(--space-2);
 }
 
 .hidden {
