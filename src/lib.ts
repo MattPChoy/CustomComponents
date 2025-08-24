@@ -6,22 +6,29 @@ import InputComponentWrapper from './components/Inputs/InputComponentWrapper.vue
 
 import CTable from './components/Layout/CTable.vue'
 import NavBar from './components/Layout/NavBar.vue'
+import COverlayContainer from './components/Overlays/COverlayContainer.vue'
+import ModalWrapper from './components/Overlays/ModalWrapper.vue'
+import OverlayPlugin, {type ModalData} from './components/Overlays/OverlayPlugin.ts'
 
 import './spacing.css'
 import './style.css'
 import './theme.css'
 
-import { ColumnOptions, PaginationOptions, TableOptions } from './components/Layout/Table/TableOptions'
+import {ColumnOptions, PaginationOptions, TableOptions} from './components/Layout/Table/TableOptions'
 
 export {
-  CFilePicker,
-  CNumberInput,
-  CTextInput,
-  CToggleInput,
-  InputComponentWrapper,
-  CTable,
-  NavBar,
-  type TableOptions,
-  type PaginationOptions,
-  type ColumnOptions,
+    CFilePicker,
+    CNumberInput,
+    CTextInput,
+    CToggleInput,
+    InputComponentWrapper,
+    CTable,
+    NavBar,
+    COverlayContainer,
+    ModalWrapper,
+    OverlayPlugin,
+    type ModalData,
+    type TableOptions,
+    type PaginationOptions,
+    type ColumnOptions,
 }
