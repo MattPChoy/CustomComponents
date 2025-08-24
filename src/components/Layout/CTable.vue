@@ -45,13 +45,15 @@
           </td>
         </tr>
 
-        <tr v-for="row in rowsToDisplay" :key="keySelector(row)" @click="() => onRowClicked(row)">
+
+        <tr v-for="row in rowsToDisplay" v-bind="keySelector ? { key: keySelector(row) } : {}"
+            @click="() => onRowClicked(row)">
           <td v-for="col in tableColumns" :key="col.key">
             <slot :name="'col_' + col.key" :row="row">
               {{ row[col.key] }}
             </slot>
           </td>
-          
+
           <td>
             <slot name="action_col" v-if="useActionRow" :row="row"/>
           </td>
@@ -124,7 +126,7 @@ const tableColumns = computed(() => {
 
   return keys
     .sort((a, b) => {
-      const columnsKeys = Object.keys(options.columns || {})
+      const columnsKeys = Object.keys(options.columns ?? {})
       const aInColumns = columnsKeys.includes(a)
       const bInColumns = columnsKeys.includes(b)
 
@@ -139,7 +141,7 @@ const tableColumns = computed(() => {
     })
     .map((key) => ({
       key,
-      displayName: options.columns[key as keyof T]?.displayName || key,
+      displayName: (options.columns?.[key as keyof T]?.displayName) || key,
     }))
 })
 
@@ -153,7 +155,7 @@ const sortIcon = computed(() =>
     : 'fas fa-sort-down'
 )
 
-const pageSize = computed(() => options.pageSize)
+const pageSize = computed(() => options.pageSize ?? 20);
 const numPages = computed(() =>
   Math.ceil(filteredRows.value.length / pageSize.value)
 )
