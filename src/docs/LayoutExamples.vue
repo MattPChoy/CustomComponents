@@ -224,7 +224,7 @@ const tableOptions = computed<TableOptions<TableDataType>>(() => ({
   },
   defaultSortColumn: 'id',
   paginationRetrievalDebounce: 200,
-}))
+} as TableOptions<TableDataType>));
 </script>
 
 <style scoped></style>
