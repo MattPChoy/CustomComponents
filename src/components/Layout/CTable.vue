@@ -292,6 +292,10 @@ watch(
 
 watch(searchString, () => {
   resetTableData()
+});
+
+defineExpose({
+  resetTableData,
 })
 </script>
 
