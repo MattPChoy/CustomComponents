@@ -1,16 +1,15 @@
 <template>
   <AnchoredScrollable class="modal-container">
-    <template #header v-if="header">
+    <slot name="header" v-if="header">
       <h2>{{header}}</h2>
-    </template>
+    </slot>
     
-    <template #content>
+    <slot name="content" :onClose="overlay.onClose">
       <div class="modal-content-container">
-        <slot/> 
       </div>
-    </template>
+    </slot>
     
-    <template #footer>
+    <template #footer v-if="useDefaultFooter">
       <div class="modal-button-bar">
         <CButton text="Cancel" type="Secondary" @click="onCancelClicked"/>
         <CButton text="Ok" type="Primary" @click="onOkClicked"/>
@@ -27,7 +26,8 @@ import { ModalData } from "./OverlayPlugin.ts";
 
 const props = defineProps({
   header: { type: String, default: undefined },
-  overlay: { type: Object as PropType<ModalData>, required: true }
+  overlay: { type: Object as PropType<ModalData>, required: true },
+  useDefaultFooter: { type: Boolean, default: true },
 });
 
 function onCancelClicked() {

@@ -12,11 +12,18 @@
 <script setup lang="ts">
 import {showModal} from "../../components/Overlays/OverlayPlugin.ts";
 import ExampleModal from "./ExampleModal.vue";
+import {PropType} from "vue";
 
 const props = defineProps({
   message: {type: String, required: true},
-  depth: {type: Number, default: 0}
+  depth: {type: Number, default: 0},
+  onClose: {
+    type: Function as PropType<(cancelPressed: boolean) => void>,
+    default: () => {}
+  }
 })
+
+
 
 function onShowOverlay() {
   showModal(ExampleModal, {message: props.message, depth: props.depth + 1})

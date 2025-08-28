@@ -1,8 +1,11 @@
 <template>
   <div class="overlay-container" v-if="overlays.length > 0">
     <ModalWrapper v-bind="$props" :overlay="overlay" v-for="overlay in overlays">
-      <component :is="overlay.component"
-                 v-bind="overlay.props"/>
+      <template #content="{ onClose }">
+        <component :is="overlay.component"
+                   :onClose="onClose"
+                   v-bind="overlay.props"/>
+      </template>
     </ModalWrapper>
   </div>
 </template>
