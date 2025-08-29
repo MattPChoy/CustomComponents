@@ -4,7 +4,7 @@
     <span>Message: {{ message }}</span>
     <span>Depth: {{ depth }}</span>
 
-    <button @click="onShowOverlay">Show Modal</button>
+    <c-button @click="onShowOverlay" text="Show Modal"></c-button>
   </div>
 
 </template>
@@ -13,6 +13,7 @@
 import {showModal} from "../../components/Overlays/OverlayPlugin.ts";
 import ExampleModal from "./ExampleModal.vue";
 import {PropType} from "vue";
+import CButton from "../../components/Inputs/CButton.vue";
 
 const props = defineProps({
   message: {type: String, required: true},

@@ -1,13 +1,14 @@
 <template>
   <AnchoredScrollable class="modal-container">
-    <slot name="header" v-if="header">
+    <template #header v-if="header">
       <h2>{{header}}</h2>
-    </slot>
+    </template>
     
-    <slot name="content" :onClose="overlay.onClose">
+    <template #content :onClose="overlay.onClose">
       <div class="modal-content-container">
+        <slot name="content"></slot>
       </div>
-    </slot>
+    </template>
     
     <template #footer v-if="useDefaultFooter">
       <div class="modal-button-bar">
@@ -53,6 +54,14 @@ function onOkClicked() {
   
   min-width: 300px;
   min-height: 250px;
+}
+
+.modal-content-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+
+  margin: var(--space-2);
 }
 
 .modal-button-bar {

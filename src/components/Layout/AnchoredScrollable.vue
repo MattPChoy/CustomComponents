@@ -1,15 +1,15 @@
 <template>
   <div class="anchored-scrollable-container">
     <div class="anchored-scrollable-header">
-      <slot name="header"/>
+      <slot name="header"></slot>
     </div>
     
     <div class="anchored-scrollable-content">
-      <slot name="content"/>
+      <slot name="content">asdf</slot>
     </div>
     
     <div class="anchored-scrollable-footer">
-      <slot name="footer"/>
+      <slot name="footer"></slot>
     </div>
   </div>
 </template>
