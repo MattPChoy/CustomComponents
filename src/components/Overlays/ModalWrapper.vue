@@ -4,9 +4,9 @@
       <h2>{{header}}</h2>
     </template>
     
-    <template #content :onClose="overlay.onClose">
+    <template #content=onClose>
       <div class="modal-content-container">
-        <slot name="content"></slot>
+        <slot name="content" v-bind="onClose"></slot>
       </div>
     </template>
     
@@ -22,8 +22,12 @@
 <script setup lang="ts">
 import AnchoredScrollable from "../Layout/AnchoredScrollable.vue";
 import CButton from "../Inputs/CButton.vue";
-import {PropType, toRaw} from "vue";
+import {onMounted, PropType} from "vue";
 import { ModalData } from "./OverlayPlugin.ts";
+
+onMounted(() => {
+  console.log(props.useDefaultFooter)
+})
 
 const props = defineProps({
   header: { type: String, default: undefined },
@@ -32,12 +36,10 @@ const props = defineProps({
 });
 
 function onCancelClicked() {
-  console.log("Cancel clicked", toRaw(props.overlay));
   props.overlay?.close(true);
 }
 
 function onOkClicked() {
-  console.log("ok clicked", toRaw(props.overlay));
   props.overlay?.close(false);
 }
 
@@ -48,7 +50,6 @@ function onOkClicked() {
 .modal-container {
   background: var(--bg-main-10);
   border-radius: var(--space-1);
-  padding: var(--space-2);
   
   position: absolute;
   

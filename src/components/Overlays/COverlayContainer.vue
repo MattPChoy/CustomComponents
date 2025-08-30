@@ -1,6 +1,6 @@
 <template>
   <div class="overlay-container" v-if="overlays.length > 0">
-    <ModalWrapper v-bind="$props" :overlay="overlay" v-for="overlay in overlays">
+    <ModalWrapper v-bind="{...$props, ...overlay.props}" :overlay="overlay" v-for="overlay in overlays">
       <template #content="{ onClose }">
         <component :is="overlay.component"
                    :onClose="onClose"
@@ -14,6 +14,12 @@
 import {overlays} from "./OverlayPlugin.ts";
 import {onMounted} from "vue";
 import ModalWrapper from "./ModalWrapper.vue";
+
+// @ts-ignore: unused variable
+const props = defineProps({
+  header: { type: String, default: undefined },
+  useDefaultFooter: { type: Boolean, default: true },
+});
 
 onMounted(() => {
   window.addEventListener('keydown', (e) => {

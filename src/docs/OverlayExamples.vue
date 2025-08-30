@@ -22,7 +22,7 @@ import {ref} from "vue";
 const modalMessage = ref("Hello World!");
 
 function onShowOverlay() {
-  showModal(ExampleModal, { message: modalMessage.value, depth: 0 });
+  showModal(ExampleModal, { message: modalMessage.value, depth: 0, useDefaultFooter:false });
 }
 </script>
 
