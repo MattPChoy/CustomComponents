@@ -6,6 +6,7 @@ import InputComponentWrapper from './components/Inputs/InputComponentWrapper.vue
 import CDateSelector from './components/Inputs/CDateSelector.vue'
 import CButton from "./components/Inputs/CButton.vue";
 
+import CSpinner from './components/Layout/CSpinner.vue'
 import CTable from './components/Layout/CTable.vue'
 import NavBar from './components/Layout/NavBar.vue'
 import COverlayContainer from './components/Overlays/COverlayContainer.vue'
@@ -26,6 +27,7 @@ export {
     CDateSelector,
     InputComponentWrapper,
     CTable,
+    CSpinner,
     CButton,
     NavBar,
     COverlayContainer,
