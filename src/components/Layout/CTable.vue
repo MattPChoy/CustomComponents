@@ -41,7 +41,7 @@
         <tbody>
         <tr v-if="loading && usePagination">
           <td :colspan="tableColumns.length" style="text-align: center;">
-            <span><font-awesome-icon icon="fas fa-spinner" spin/></span>
+            <span><c-spinner/></span>
           </td>
         </tr>
 
@@ -94,6 +94,7 @@ import type {PaginationOptions, TableOptions} from './Table/TableOptions'
 import CTextInput from '../Inputs/CTextInput.vue'
 import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
 import {SortDirection} from '../../models/SortDirection'
+import CSpinner from "./CSpinner.vue";
 
 const props = defineProps<{
   rows: T[] | ((params: PaginationOptions) => Promise<T[]>)

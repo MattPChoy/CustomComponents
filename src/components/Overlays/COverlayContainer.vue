@@ -1,7 +1,7 @@
 <template>
   <div class="overlay-container" v-if="overlays.length > 0">
-    <ModalWrapper v-bind="{...$props, ...overlay.props}" :overlay="overlay" v-for="overlay in overlays">
-      <template #content="{ onClose }">
+    <ModalWrapper v-bind="{...$props, ...overlay.props}" :overlay="overlay" v-for="overlay in overlays" :id="overlay.id">
+      <template #content="onClose">
         <component :is="overlay.component"
                    :onClose="onClose"
                    v-bind="overlay.props"/>

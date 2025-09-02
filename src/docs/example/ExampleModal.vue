@@ -16,35 +16,50 @@
 
     <template #footer>
       <div class="button-bar">
-        <c-button text="Cancel" type="Secondary" @click="onClose(true)"/>
-        <c-button text="Ok" type="Primary" @click="onClose(false)"/>
+        <c-button text="Cancel" type="Secondary" @click="handleClose(true)" />
+        <c-button text="Ok" type="Primary" @click="handleClose(false)" />
       </div>
-    </template> 
+    </template>
   </AnchoredScrollable>
 </template>
 
 <script setup lang="ts">
-import {showModal} from "../../components/Overlays/OverlayPlugin.ts";
+import { showModal } from "../../components/Overlays/OverlayPlugin.ts";
 import ExampleModal from "./ExampleModal.vue";
-import {onMounted, PropType} from "vue";
+import { onMounted, PropType } from "vue";
 import CButton from "../../components/Inputs/CButton.vue";
 import AnchoredScrollable from "../../components/Layout/AnchoredScrollable.vue";
 
 const props = defineProps({
-  message: {type: String, required: true},
-  depth: {type: Number, default: 0},
+  message: { type: String, required: true },
+  depth: { type: Number, default: 0 },
   onClose: {
     type: Function as PropType<(cancelPressed: boolean) => void>,
-    default: () => {}
-  }
+    default: () => {
+      console.warn("onClose callback is not defined.");
+    },
+  },
 });
 
 onMounted(() => {
-  console.log(props.onClose);
-})
+  console.log("onClose callback:", props.onClose);
+});
+
+function handleClose(cancelPressed: boolean) {
+  console.log("handleClose called with cancelPressed:", cancelPressed);
+  if (props.onClose) {
+    props.onClose(cancelPressed);
+  } else {
+    console.warn("onClose callback is not defined.");
+  }
+}
 
 function onShowOverlay() {
-  showModal(ExampleModal, {message: props.message, depth: props.depth + 1, useDefaultFooter:false})
+  showModal(ExampleModal, {
+    message: props.message,
+    depth: props.depth + 1,
+    useDefaultFooter: false
+  });
 }
 </script>
 

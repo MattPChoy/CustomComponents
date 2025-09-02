@@ -4,9 +4,9 @@
       <h2>{{header}}</h2>
     </template>
     
-    <template #content=onClose>
+    <template #content>
       <div class="modal-content-container">
-        <slot name="content" v-bind="onClose"></slot>
+        <slot name="content" v-bind="props.overlay?.close"></slot>
       </div>
     </template>
     
