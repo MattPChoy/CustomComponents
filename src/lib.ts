@@ -12,7 +12,7 @@ import NavBar from './components/Layout/NavBar.vue'
 import COverlayContainer from './components/Overlays/COverlayContainer.vue'
 import ModalWrapper from './components/Overlays/ModalWrapper.vue'
 import OverlayPlugin, {type ModalData, showModal } from './components/Overlays/OverlayPlugin.ts'
-import type {SortDirection} from "./models/SortDirection.ts";
+import {SortDirection} from "./models/SortDirection";
 
 import './spacing.css'
 import './style.css'
@@ -39,5 +39,5 @@ export {
     type TableOptions,
     type PaginationOptions,
     type ColumnOptions,
-    type SortDirection
+    SortDirection
 }
