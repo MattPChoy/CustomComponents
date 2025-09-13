@@ -52,9 +52,6 @@ function onOkClicked() {
   border-radius: var(--space-1);
   
   position: absolute;
-  
-  min-width: 300px;
-  min-height: 250px;
 }
 
 .modal-content-container {

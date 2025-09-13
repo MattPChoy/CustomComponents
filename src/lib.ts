@@ -10,8 +10,9 @@ import CSpinner from './components/Layout/CSpinner.vue'
 import CTable from './components/Layout/CTable.vue'
 import NavBar from './components/Layout/NavBar.vue'
 import COverlayContainer from './components/Overlays/COverlayContainer.vue'
+import CAnchoredScrollable from './components/Layout/CAnchoredScrollable.vue'
 import ModalWrapper from './components/Overlays/ModalWrapper.vue'
-import OverlayPlugin, {type ModalData, showModal } from './components/Overlays/OverlayPlugin.ts'
+import OverlayPlugin, {type ModalData, showModal} from './components/Overlays/OverlayPlugin.ts'
 import {SortDirection} from "./models/SortDirection";
 
 import './spacing.css'
@@ -32,6 +33,7 @@ export {
     CButton,
     NavBar,
     COverlayContainer,
+    CAnchoredScrollable,
     ModalWrapper,
     OverlayPlugin,
     showModal,
