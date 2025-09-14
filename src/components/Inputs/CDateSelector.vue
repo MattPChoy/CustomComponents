@@ -1,21 +1,31 @@
 <template>
     <InputComponentWrapper :label="label">
         <template #input>
-            <input type="date" v-model="model"/>
+          <input type="date" :value="dateString" @input="updateDate($event)"/>
         </template>
     </InputComponentWrapper>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import {computed} from 'vue';
 import InputComponentWrapper from './InputComponentWrapper.vue';
 
-defineProps({
-    label: { type: String },
-    disabled: { type: Boolean, default: false }
+const props = defineProps({
+  label: {type: String},
+  disabled: {type: Boolean, default: false},
+  modelValue: {type: Date, required: true}
 });
 
-const model = ref<Date>(new Date());
+const emit = defineEmits(['update:modelValue']);
+
+const dateString = computed(() => {
+  return props.modelValue.toISOString().split('T')[0];
+});
+
+function updateDate(event: Event) {
+  const target = event.target as HTMLInputElement;
+  emit('update:modelValue', new Date(target.value));
+}
 </script>
 
 <style>

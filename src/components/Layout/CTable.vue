@@ -301,6 +301,10 @@ defineExpose({
 </script>
 
 <style scoped>
+.table-container {
+  width: 100%;
+}
+
 .table-header-container {
   display: flex;
   flex-direction: column;

@@ -127,7 +127,8 @@
 
     <DocWrapper title="Date Selector">
         <template #usage>
-          <CDateSelector label="Birthday"/>
+          <CDateSelector label="Birthday" v-model="birthday"/>
+          {{birthday.toDateString()}}
         </template>
     </DocWrapper>
     <DocWrapper title="Button">
@@ -201,12 +202,7 @@ class DropdownInputData {
 }
 const dropdownData = ref(new DropdownInputData());
 
-// class ValidatedFormData {
-//   public numberValue: number = 0;
-//   public isValid: Boolean = true;
-// }
-
-//const validatedFormData = ref(new ValidatedFormData());
+const birthday = ref(new Date());
 </script>
 
 <style scoped>
