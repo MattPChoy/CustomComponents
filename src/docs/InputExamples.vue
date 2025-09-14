@@ -81,7 +81,8 @@
         <CFilePicker
           :draggable="fileData.draggable"
           :disabled="fileData.disabled"
-          :multiple="fileData.multiple" />
+          :multiple="fileData.multiple" 
+        v-model="selectedFiles"/>
         <div class="toggle-bar">
           <c-toggle-input v-model="fileData.draggable" label="Draggable" />
           <c-toggle-input v-model="fileData.disabled" label="Disabled" />
@@ -139,16 +140,6 @@
         </div>
       </template>
     </DocWrapper>
-
-<!--    <DocWrapper title="Validated Form">-->
-<!--      <template #usage>-->
-<!--        <CValidatedForm v-model="validatedFormData.isValid">-->
-<!--          <CNumberInput v-model="validatedFormData.numberValue" label="Numba"/>-->
-<!--        </CValidatedForm>-->
-
-<!--        <p>Form is valid? {{ validatedFormData.isValid ?'Yes!' : 'No!' }}</p>-->
-<!--      </template>-->
-<!--    </DocWrapper>-->
   </div>
 </template>
 
@@ -189,7 +180,8 @@ const firstTextInputValidation = (input: string) =>
 
 const numberInputModel = ref(0)
 
-const fileData = ref(new FileInputData())
+const fileData = ref(new FileInputData());
+const selectedFiles = ref<File[]>([]);
 const buttonDisabled = ref(false)
 
 

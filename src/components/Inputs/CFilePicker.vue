@@ -31,14 +31,19 @@ import { computed, type PropType, ref } from 'vue'
 
 const fileInput = ref<HTMLInputElement>()
 const isDragging = ref(false)
-const model = defineModel({ type: Array as PropType<Array<File>>, default: [] })
 const validationError = ref('')
 
 const props = defineProps({
+  modelValue: { type: Array as PropType<Array<File>>, default: [] },
   disabled: { type: Boolean, default: false },
   draggable: { type: Boolean, default: false },
   multiple: { type: Boolean, default: false },
-})
+});
+
+const emit = defineEmits({
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  'update:modelValue': (_files: File[]) => true
+});
 
 const onDragOver = () => {
   isDragging.value = true
@@ -48,11 +53,6 @@ const onDragLeave = () => {
   isDragging.value = false
 }
 
-const emit = defineEmits({
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  update: (_files: File[]) => true,
-})
-
 const onDrop = (e: DragEvent) => {
   isDragging.value = false
   const files = e.dataTransfer?.files
@@ -61,10 +61,8 @@ const onDrop = (e: DragEvent) => {
     validationError.value = 'Please choose only one file'
     return
   }
-
-  const _files = Array.from(files!)
-  emit('update', _files)
-  model.value = Array.from(files!)
+  
+  emit('update:modelValue', Array.from(files!))
 }
 
 function onClick() {
@@ -74,15 +72,15 @@ function onClick() {
 }
 
 const fileMessage = computed(() => {
-  if (model.value.length === 0) {
+  if (props.modelValue.length === 0) {
     return props.multiple ? 'Drag files here' : 'Drag a file here'
   } else {
-    return model.value.map((f) => f.name).join(', ')
+    return props.modelValue.map((f) => f.name).join(', ')
   }
 })
 
 function onFilesSelected(e: Event) {
-  emit('update', Array.from((e.target as HTMLInputElement).files ?? []))
+  emit('update:modelValue', Array.from((e.target as HTMLInputElement).files ?? []))
 }
 </script>
 
