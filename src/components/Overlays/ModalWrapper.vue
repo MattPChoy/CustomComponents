@@ -1,5 +1,5 @@
 <template>
-  <AnchoredScrollable class="modal-container">
+  <CAnchoredScrollable class="modal-container">
     <template #header v-if="header">
       <h2>{{header}}</h2>
     </template>
@@ -16,11 +16,11 @@
         <CButton text="Ok" type="Primary" @click="onOkClicked"/>
       </div>
     </template>
-  </AnchoredScrollable>
+  </CAnchoredScrollable>
 </template>
 
 <script setup lang="ts">
-import AnchoredScrollable from "../Layout/AnchoredScrollable.vue";
+import CAnchoredScrollable from "../Layout/CAnchoredScrollable.vue";
 import CButton from "../Inputs/CButton.vue";
 import {onMounted, PropType} from "vue";
 import { ModalData } from "./OverlayPlugin.ts";

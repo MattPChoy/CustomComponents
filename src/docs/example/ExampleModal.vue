@@ -1,5 +1,5 @@
 <template>
-  <AnchoredScrollable>
+  <CAnchoredScrollable>
     <template #header>
       <h2>Header!</h2>
     </template>
@@ -11,6 +11,8 @@
         <span>Depth: {{ depth }}</span>
 
         <c-button @click="onShowOverlay" text="Show Modal"></c-button>
+        
+        <CTextInput v-model="data" label="Data"/>
       </div>
     </template>
 
@@ -20,21 +22,24 @@
         <c-button text="Ok" type="Primary" @click="handleClose(false)" />
       </div>
     </template>
-  </AnchoredScrollable>
+  </CAnchoredScrollable>
 </template>
 
 <script setup lang="ts">
 import { showModal } from "../../components/Overlays/OverlayPlugin.ts";
 import ExampleModal from "./ExampleModal.vue";
-import { onMounted, PropType } from "vue";
+import {onMounted, PropType, ref} from "vue";
 import CButton from "../../components/Inputs/CButton.vue";
-import AnchoredScrollable from "../../components/Layout/AnchoredScrollable.vue";
+import CAnchoredScrollable from "../../components/Layout/CAnchoredScrollable.vue";
+import CTextInput from "../../components/Inputs/CTextInput.vue";
+
+const data = ref("Yo what up");
 
 const props = defineProps({
   message: { type: String, required: true },
   depth: { type: Number, default: 0 },
   onClose: {
-    type: Function as PropType<(cancelPressed: boolean) => void>,
+    type: Function as PropType<(cancelPressed: boolean, data?: any) => void>,
     default: () => {
       console.warn("onClose callback is not defined.");
     },
@@ -48,7 +53,7 @@ onMounted(() => {
 function handleClose(cancelPressed: boolean) {
   console.log("handleClose called with cancelPressed:", cancelPressed);
   if (props.onClose) {
-    props.onClose(cancelPressed);
+    props.onClose(cancelPressed, data.value);
   } else {
     console.warn("onClose callback is not defined.");
   }

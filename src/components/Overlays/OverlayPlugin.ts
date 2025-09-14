@@ -3,10 +3,10 @@ import { App, ref } from "vue";
 export const overlays = ref<ModalData[]>([]);
 
 export class ModalData {
-    constructor(component: any, props?: any, onClose?: (cancelPressed: boolean) => void) {
+    constructor(component: any, props?: any, onClose?: (cancelPressed: boolean, data?: any) => void) {
         this.component = component;
         this.props = props;
-        this.onClose = onClose ? (onClose) : (() => { });
+        this.onClose = onClose ? onClose : (() => { });
         this.close = this.close.bind(this); // Bind the close method to the instance
     }
 
@@ -14,18 +14,18 @@ export class ModalData {
     public component: any;
     public props: any;
     //@ts-ignore
-    public onClose: (cancelPressed: boolean) => void;
+    public onClose: (cancelPressed: boolean, data?: any) => void;
 
-    public close(cancelPressed: boolean = false) {
+    public close(cancelPressed: boolean = false, data?: any) {
         overlays.value = overlays.value.filter((o) => o.id !== this.id)
 
         // Ensure onClose is not recursively triggering close
         const onCloseCallback = this.onClose;
-        if (onCloseCallback) onCloseCallback(cancelPressed);
+        if (onCloseCallback) onCloseCallback(cancelPressed, data);
     }
 }
 
-function showModal(modal: any, props?: object, onClose?: (cancelPressed: boolean) => void) {
+function showModal(modal: any, props?: object, onClose?: (cancelPressed: boolean, data?: any) => void) {
     overlays.value.push(new ModalData(modal, props, onClose));
 }
 

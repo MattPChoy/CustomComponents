@@ -124,7 +124,7 @@
     </DocWrapper>
     <DocWrapper title="Anchored Scrollable">
       <template #usage>
-        <AnchoredScrollable style="max-height: 400px;">
+        <CAnchoredScrollable style="max-height: 400px;">
           <template #header>
             <h3>Anchored Header</h3>
           </template>
@@ -150,7 +150,7 @@
           <template #footer>
             <div style="border: 1px solid var(--primary); padding: 16px;">Some content at the bottom</div>
           </template>
-        </AnchoredScrollable>
+        </CAnchoredScrollable>
       </template>
     </DocWrapper>
   </div>
@@ -168,7 +168,7 @@ import type {
 import { mockTableData } from './meta/TableData'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { SortDirection } from '../models/SortDirection'
-import AnchoredScrollable from "../components/Layout/AnchoredScrollable.vue";
+import CAnchoredScrollable from "../components/Layout/CAnchoredScrollable.vue";
 
 interface TableDataType {
   name: string
