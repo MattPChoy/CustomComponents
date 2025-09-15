@@ -1,6 +1,7 @@
 <template>
   <button :disabled="disabled" @click="onClick" :class="buttonClass">
     {{ text }}
+    <slot/>
   </button>
 </template>
 
@@ -8,7 +9,7 @@
 import { computed, PropType } from 'vue'
 
 const props = defineProps({
-  text: { type: String, required: true },
+  text: { type: String, required: false },
   disabled: { type: Boolean, default: false },
   type: {
     type: String as PropType<'Primary' | 'Secondary' | 'Outlined'>,
