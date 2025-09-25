@@ -18,11 +18,10 @@
         </li>
 
         <li>
-          <a href="/CustomComponents/#/layouts"> Layout </a>: NavBar, tables etc.
+          <a href="/CustomComponents/#/layouts"> Layout </a>: NavBar, tables
+          etc.
         </li>
-        <li>
-          <a href="/CustomComponents/#/overlays"> Overlays </a>: Modals
-        </li>
+        <li><a href="/CustomComponents/#/overlays"> Overlays </a>: Modals</li>
       </ul>
     </div>
   </div>

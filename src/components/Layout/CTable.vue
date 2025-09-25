@@ -11,59 +11,60 @@
       </div>
 
       <div class="search-container" v-if="options.useSearch">
-        <div/>
+        <div />
 
         <div class="flex-row gap-x-1">
-          <font-awesome-icon icon="fas fa-search"/>
+          <font-awesome-icon icon="fas fa-search" />
           <c-text-input
             v-model="searchString"
             :show-validation="false"
-            @update:modelValue="resetTableData"/>
+            @update:modelValue="resetTableData" />
         </div>
       </div>
 
       <table class="table">
         <thead>
-        <tr>
-          <th
-            v-for="column in tableColumns"
-            :key="column.key"
-            @click="() => onColumnClicked(column.key)">
-            {{ column.displayName }}
-            <font-awesome-icon
-              :icon="sortIcon"
-              :class="{ hidden: sortColumn !== column.key }"/>
-          </th>
-          <th v-if="useActionRow"/>
-        </tr>
+          <tr>
+            <th
+              v-for="column in tableColumns"
+              :key="column.key"
+              @click="() => onColumnClicked(column.key)">
+              {{ column.displayName }}
+              <font-awesome-icon
+                :icon="sortIcon"
+                :class="{ hidden: sortColumn !== column.key }" />
+            </th>
+            <th v-if="useActionRow" />
+          </tr>
         </thead>
 
         <tbody>
-        <tr v-if="loading && usePagination">
-          <td :colspan="tableColumns.length" style="text-align: center;">
-            <span><c-spinner/></span>
-          </td>
-        </tr>
+          <tr v-if="loading && usePagination">
+            <td :colspan="tableColumns.length" style="text-align: center">
+              <span><c-spinner /></span>
+            </td>
+          </tr>
 
-
-        <tr v-for="row in rowsToDisplay" v-bind="keySelector ? { key: keySelector(row) } : {}"
+          <tr
+            v-for="row in rowsToDisplay"
+            v-bind="keySelector ? { key: keySelector(row) } : {}"
             @click="() => onRowClicked(row)">
-          <td v-for="col in tableColumns" :key="col.key">
-            <slot :name="'col_' + col.key" :row="row">
-              {{ row[col.key] }}
-            </slot>
-          </td>
+            <td v-for="col in tableColumns" :key="col.key">
+              <slot :name="'col_' + col.key" :row="row">
+                {{ row[col.key] }}
+              </slot>
+            </td>
 
-          <td>
-            <slot name="action_col" v-if="useActionRow" :row="row"/>
-          </td>
-        </tr>
+            <td>
+              <slot name="action_col" v-if="useActionRow" :row="row" />
+            </td>
+          </tr>
 
-        <tr v-if="filteredRows.length === 0 && !loading">
-          <td :colspan="tableColumns.length" style="text-align: center;">
-            No records found
-          </td>
-        </tr>
+          <tr v-if="filteredRows.length === 0 && !loading">
+            <td :colspan="tableColumns.length" style="text-align: center">
+              No records found
+            </td>
+          </tr>
         </tbody>
       </table>
 
@@ -89,16 +90,16 @@
 </template>
 
 <script setup lang="ts" generic="T extends Record<string, any>">
-import {computed, onMounted, ref, watch} from 'vue'
-import type {PaginationOptions, TableOptions} from './Table/TableOptions'
+import { computed, onMounted, ref, watch } from 'vue'
+import type { PaginationOptions, TableOptions } from './Table/TableOptions'
 import CTextInput from '../Inputs/CTextInput.vue'
-import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
-import {SortDirection} from '../../models/SortDirection'
-import CSpinner from "./CSpinner.vue";
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { SortDirection } from '../../models/SortDirection'
+import CSpinner from './CSpinner.vue'
 
 const props = defineProps<{
   rows: T[] | ((params: PaginationOptions) => Promise<T[]>)
-  options: Partial<TableOptions<T>>,
+  options: Partial<TableOptions<T>>
   useActionRow?: boolean
 }>()
 
@@ -117,12 +118,12 @@ const tableColumns = computed(() => {
     ? paginatedRows.value
     : (props.rows as T[])
   if (sourceRows.length === 0) return []
-  let keys = Object.keys(sourceRows[0]);
+  let keys = Object.keys(sourceRows[0])
 
   // Filter down columns if options.columns populated.
   const columnsKeys = Object.keys(options.columns || {})
   if (columnsKeys.length > 0) {
-    keys = keys.filter(key => columnsKeys.includes(key))
+    keys = keys.filter((key) => columnsKeys.includes(key))
   }
 
   return keys
@@ -142,7 +143,7 @@ const tableColumns = computed(() => {
     })
     .map((key) => ({
       key,
-      displayName: (options.columns?.[key as keyof T]?.displayName) || key,
+      displayName: options.columns?.[key as keyof T]?.displayName || key,
     }))
 })
 
@@ -156,7 +157,7 @@ const sortIcon = computed(() =>
     : 'fas fa-sort-down'
 )
 
-const pageSize = computed(() => options.pageSize ?? 20);
+const pageSize = computed(() => options.pageSize ?? 20)
 const numPages = computed(() =>
   Math.ceil(filteredRows.value.length / pageSize.value)
 )
@@ -205,7 +206,7 @@ function resetTableData() {
 
 function onRowClicked(row: T) {
   if (props.options.onRowClicked) {
-    props.options.onRowClicked(row);
+    props.options.onRowClicked(row)
   }
 }
 
@@ -237,8 +238,8 @@ const filteredRows = computed<T[]>(() => {
   const filtered = (props.rows as T[]).filter((row) =>
     options.useSearch
       ? Object.values(row).some((v) =>
-        v?.toString().toLowerCase().includes(searchString.value.toLowerCase())
-      )
+          v?.toString().toLowerCase().includes(searchString.value.toLowerCase())
+        )
       : true
   )
 
@@ -257,7 +258,6 @@ const filteredRows = computed<T[]>(() => {
 
   return filtered
 })
-
 
 const rowsToDisplay = computed(() => {
   if (usePagination.value) {
@@ -293,7 +293,7 @@ watch(
 
 watch(searchString, () => {
   resetTableData()
-});
+})
 
 defineExpose({
   resetTableData,

@@ -12,34 +12,32 @@
 
     <template #footer v-if="useDefaultFooter">
       <div class="modal-button-bar">
-        <CButton text="Cancel" type="Secondary" @click="onCancelClicked"/>
-        <CButton text="Ok" type="Primary" @click="onOkClicked"/>
+        <CButton text="Cancel" type="Secondary" @click="onCancelClicked" />
+        <CButton text="Ok" type="Primary" @click="onOkClicked" />
       </div>
     </template>
   </CAnchoredScrollable>
 </template>
 
 <script setup lang="ts">
-import CAnchoredScrollable from "../Layout/CAnchoredScrollable.vue";
-import CButton from "../Inputs/CButton.vue";
-import {PropType} from "vue";
-import {ModalData} from "./OverlayPlugin.ts";
+import CAnchoredScrollable from '../Layout/CAnchoredScrollable.vue'
+import CButton from '../Inputs/CButton.vue'
+import { PropType } from 'vue'
+import { ModalData } from './OverlayPlugin.ts'
 
 const props = defineProps({
-  header: {type: String, default: undefined},
-  overlay: {type: Object as PropType<ModalData>, required: true},
-  useDefaultFooter: {type: Boolean, default: true},
-});
+  header: { type: String, default: undefined },
+  overlay: { type: Object as PropType<ModalData>, required: true },
+  useDefaultFooter: { type: Boolean, default: true },
+})
 
 function onCancelClicked() {
-  props.overlay?.close(true);
+  props.overlay?.close(true)
 }
 
 function onOkClicked() {
-  props.overlay?.close(false);
+  props.overlay?.close(false)
 }
-
-
 </script>
 
 <style scoped>

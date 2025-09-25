@@ -8,7 +8,7 @@ import { fas } from '@fortawesome/free-solid-svg-icons'
 import { faR } from '@fortawesome/free-solid-svg-icons/faR'
 import { fab } from '@fortawesome/free-brands-svg-icons'
 import { router } from './router'
-import OverlayPlugin from "./components/Overlays/OverlayPlugin.ts";
+import OverlayPlugin from './components/Overlays/OverlayPlugin.ts'
 
 setupFontAwesome()
 

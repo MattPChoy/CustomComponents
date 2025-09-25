@@ -2,7 +2,7 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { resolve } from 'path'
 import dts from 'vite-plugin-dts'
-import libCss from "vite-plugin-libcss";
+import libCss from 'vite-plugin-libcss'
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -14,7 +14,7 @@ export default defineConfig({
       outDir: 'dist',
       rollupTypes: true,
     }),
-    libCss()
+    libCss(),
   ],
   base: '/CustomComponents/',
   server: {

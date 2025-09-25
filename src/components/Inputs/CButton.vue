@@ -1,7 +1,7 @@
 <template>
   <button :disabled="disabled" @click="onClick" :class="buttonClass">
     {{ text }}
-    <slot/>
+    <slot />
   </button>
 </template>
 

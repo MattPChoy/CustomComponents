@@ -46,7 +46,8 @@ defineProps({
 }
 
 input,
-textarea, select {
+textarea,
+select {
   padding: 4px;
   border: 1px solid var(--font-primary);
   border-radius: 4px;
@@ -60,7 +61,8 @@ textarea, select {
   }
 }
 
-input, select {
+input,
+select {
   height: 24px;
 }
 

@@ -19,5 +19,5 @@ export interface TableOptions<T> {
   columns: Partial<Record<keyof T, { displayName: string }>>
   paginationRetrievalDebounce: number
   defaultSortColumn: string
-  onRowClicked: (row: T) => void;
+  onRowClicked: (row: T) => void
 }

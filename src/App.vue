@@ -15,7 +15,7 @@
     </template>
   </NavBar>
   <router-view></router-view>
-  <c-overlay-container/>
+  <c-overlay-container />
   <div class="footer-container">
     <span>Created by Matt Choy</span>
     <span>
@@ -33,7 +33,7 @@
 import NavBar from './components/Layout/NavBar.vue'
 import { isDark, toggleTheme } from './styles/theming'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import COverlayContainer from "./components/Overlays/COverlayContainer.vue";
+import COverlayContainer from './components/Overlays/COverlayContainer.vue'
 
 function onThemeNameClicked() {
   toggleTheme()

@@ -81,8 +81,8 @@
         <CFilePicker
           :draggable="fileData.draggable"
           :disabled="fileData.disabled"
-          :multiple="fileData.multiple" 
-        v-model="selectedFiles"/>
+          :multiple="fileData.multiple"
+          v-model="selectedFiles" />
         <div class="toggle-bar">
           <c-toggle-input v-model="fileData.draggable" label="Draggable" />
           <c-toggle-input v-model="fileData.disabled" label="Disabled" />
@@ -110,27 +110,29 @@
     </DocWrapper>
     <DocWrapper title="Dropdown">
       <template #usage>
-        <CDropdown 
+        <CDropdown
           label="Fruit"
           v-model="dropdownData.selected"
-          :options="dropdownOptions" 
+          :options="dropdownOptions"
           :option-to-display-string="(o: string) => o"
-          :disabled="dropdownData.disabled"/>
+          :disabled="dropdownData.disabled" />
 
         <div class="toggle-bar">
-          <CToggleInput v-model="dropdownData.disabled" label="Disabled"/>
+          <CToggleInput v-model="dropdownData.disabled" label="Disabled" />
         </div>
 
-        <p v-if="dropdownData.selected">Your favourite fruit is {{ dropdownData.selected }}</p>
+        <p v-if="dropdownData.selected">
+          Your favourite fruit is {{ dropdownData.selected }}
+        </p>
         <p v-else>You have no favourite fruit</p>
       </template>
     </DocWrapper>
 
     <DocWrapper title="Date Selector">
-        <template #usage>
-          <CDateSelector label="Birthday" v-model="birthday"/>
-          {{birthday.toDateString()}}
-        </template>
+      <template #usage>
+        <CDateSelector label="Birthday" v-model="birthday" />
+        {{ birthday.toDateString() }}
+      </template>
     </DocWrapper>
     <DocWrapper title="Button">
       <template #usage>
@@ -180,21 +182,18 @@ const firstTextInputValidation = (input: string) =>
 
 const numberInputModel = ref(0)
 
-const fileData = ref(new FileInputData());
-const selectedFiles = ref<File[]>([]);
+const fileData = ref(new FileInputData())
+const selectedFiles = ref<File[]>([])
 const buttonDisabled = ref(false)
 
-
-const dropdownOptions = [
-  'Apple', 'Banana', 'Cherry', 'Dragonfruit'
-];
+const dropdownOptions = ['Apple', 'Banana', 'Cherry', 'Dragonfruit']
 class DropdownInputData {
   public disabled: boolean = false
-  public selected: string | undefined = undefined;
+  public selected: string | undefined = undefined
 }
-const dropdownData = ref(new DropdownInputData());
+const dropdownData = ref(new DropdownInputData())
 
-const birthday = ref(new Date());
+const birthday = ref(new Date())
 </script>
 
 <style scoped>

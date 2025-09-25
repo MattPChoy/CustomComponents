@@ -38,12 +38,12 @@ const props = defineProps({
   disabled: { type: Boolean, default: false },
   draggable: { type: Boolean, default: false },
   multiple: { type: Boolean, default: false },
-});
+})
 
 const emit = defineEmits({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  'update:modelValue': (_files: File[]) => true
-});
+  'update:modelValue': (_files: File[]) => true,
+})
 
 const onDragOver = () => {
   isDragging.value = true
@@ -61,7 +61,7 @@ const onDrop = (e: DragEvent) => {
     validationError.value = 'Please choose only one file'
     return
   }
-  
+
   emit('update:modelValue', Array.from(files!))
 }
 
@@ -80,7 +80,10 @@ const fileMessage = computed(() => {
 })
 
 function onFilesSelected(e: Event) {
-  emit('update:modelValue', Array.from((e.target as HTMLInputElement).files ?? []))
+  emit(
+    'update:modelValue',
+    Array.from((e.target as HTMLInputElement).files ?? [])
+  )
 }
 </script>
 
