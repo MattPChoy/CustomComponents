@@ -1,10 +1,10 @@
 /* Using vueuse/core useDark to set light or dark theme on the root element*/
 :root.dark {
   --bg-main: #242424;
-  --bg-main-10: color-mix(in srgb, var(--bg-main) 90%, white);
-  --bg-main-20: color-mix(in srgb, var(--bg-main) 80%, white);
-  --bg-main-30: color-mix(in srgb, var(--bg-main) 70%, white);
-  --bg-main-40: color-mix(in srgb, var(--bg-main) 60%, white);
+  --bg-main-10: color-mix(in srgb, var(--bg-main) 90%, var(--font-primary));
+  --bg-main-20: color-mix(in srgb, var(--bg-main) 80%, var(--font-primary));
+  --bg-main-30: color-mix(in srgb, var(--bg-main) 70%, var(--font-primary));
+  --bg-main-40: color-mix(in srgb, var(--bg-main) 60%, var(--font-primary));
 
   --font-primary: #ffffff;
   --font-primary-lighter: color-mix(in srgb, var(--font-primary) 90%, black);
@@ -26,14 +26,22 @@
   --bg-main-30: color-mix(in srgb, var(--bg-main) 70%, black);
   --bg-main-40: color-mix(in srgb, var(--bg-main) 60%, black);
 
-  --font-primary: color-mix(in srgb, #000000 80%, white);
-  --font-secondary: color-mix(in srgb, #000000 60%, white);
+  --font-primary: color-mix(in srgb, #000000 80%, var(--bg-main));
+  --font-secondary: color-mix(in srgb, #000000 60%, var(--bg-main));
+
+  --primary: #24c890;
 }
 
 :root {
   background-color: var(--bg-main);
+  color: var(--font-primary);
 }
 
 .error {
   color: var(--error-color);
+}
+
+a {
+    text-decoration: none;
+    color: var(--primary);
 }
