@@ -7,6 +7,7 @@
         :value="inputValue"
         @input="onInput"
         class="input"
+        :placeholder="placeholder"
         :disabled="disabled"
         :rows="rows" />
     </template>
@@ -25,6 +26,7 @@ const props = defineProps({
   modelValue: { type: String, required: true },
   label: { type: String },
   validationFunc: { type: Function },
+  placeholder: { type: String, default: "" },
   required: { type: Boolean, default: false },
   inline: { type: Boolean, default: true },
   disabled: { type: Boolean, default: false },
