@@ -1,6 +1,7 @@
 import CFilePicker from './components/Inputs/CFilePicker.vue'
 import CNumberInput from './components/Inputs/CNumberInput.vue'
 import CTextInput from './components/Inputs/CTextInput.vue'
+import CDropdown from "./components/Inputs/CDropdown.vue";
 import CToggleInput from './components/Inputs/CToggleInput.vue'
 import InputComponentWrapper from './components/Inputs/InputComponentWrapper.vue'
 import CDateSelector from './components/Inputs/CDateSelector.vue'
@@ -34,6 +35,7 @@ export {
   CTextInput,
   CToggleInput,
   CDateSelector,
+  CDropdown,
   InputComponentWrapper,
   CTable,
   CSpinner,
