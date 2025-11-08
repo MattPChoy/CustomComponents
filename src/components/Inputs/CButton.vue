@@ -12,7 +12,7 @@ const props = defineProps({
   text: { type: String, required: false },
   disabled: { type: Boolean, default: false },
   type: {
-    type: String as PropType<'Primary' | 'Secondary' | 'Outlined'>,
+    type: String as PropType<'Primary' | 'Secondary'>,
     default: 'Primary',
   },
 })
@@ -34,12 +34,13 @@ button {
   border-radius: var(--space-1);
   cursor: pointer;
   min-width: 50px;
+  color: var(--font-primary);
 }
 
 button.primary {
   background-color: var(--primary);
   border: 1px solid var(--bg-main-20);
-  color: var(--bg-main-20);
+  color: var(--bg-main-10);
 
   &:hover {
     background-color: var(--primary-10);
