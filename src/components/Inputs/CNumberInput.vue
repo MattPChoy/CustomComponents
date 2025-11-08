@@ -64,6 +64,8 @@ function onChange() {
     validationError.value = 'Invalid value'
     return
   }
+
+  validationError.value = ''
 }
 </script>
 
