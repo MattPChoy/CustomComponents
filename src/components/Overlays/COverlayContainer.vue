@@ -1,5 +1,5 @@
 <template>
-  <div class="overlay-container" v-if="overlays.length > 0">
+  <div class="overlay-container" v-if="overlays.length > 0" @click.self="onBackdropClick">
     <ModalWrapper
       v-bind="{ ...$props, ...overlay.props }"
       :overlay="overlay"
@@ -25,6 +25,11 @@ const props = defineProps({
   header: { type: String, default: undefined },
   useDefaultFooter: { type: Boolean, default: true },
 })
+
+function onBackdropClick() {
+  if (overlays.value.length === 0) return
+  overlays.value.pop()
+}
 
 onMounted(() => {
   window.addEventListener('keydown', (e) => {
